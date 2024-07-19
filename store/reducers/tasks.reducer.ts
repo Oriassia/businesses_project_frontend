@@ -1,29 +1,60 @@
-// import { ADD_TASK, DELETE_TASK, GET_TASKS, UPDATE_TASK } from "../actionTypes";
+// import {
+//   ADD_REVIEW,
+//   DELETE_REVIEW,
+//   GET_REVIEWS,
+//   UPDATE_REVIEW,
+// } from "../actionTypes";
 
-// const INITIAL_STATE = {
-//     userTasks: [],
-//   };
+// interface Review {
+//   _id: string;
+//   [key: string]: any;
+// }
 
-//   function tasksReducer(state = INITIAL_STATE, action) {
-//     switch (action.type) {
-//       case GET_TASKS:
-//         return { ...state, userTasks: action.payload };
-        
-//       case ADD_TASK:
-//           return { ...state, userTasks: [...state.userTasks, action.payload] };
-      
-//       case DELETE_TASK:
-//       return { ...state, userTasks: state.userTasks.filter((task)=> task._id !== action.payload )  };
+// interface ReviewsState {
+//   userReviews: Review[];
+// }
 
-//       case UPDATE_TASK:
-//       return { ...state, userTasks: state.userTasks.map((task)=> task._id === action.payload._id ? {...task ,...action.payload} : task ) };
+// interface Action {
+//   type: string;
+//   payload: any;
+// }
 
-//       default:
-//         return state;
-//     }
+// const INITIAL_STATE: ReviewsState = {
+//   userReviews: [],
+// };
+
+// function tasksReducer(
+//   state: ReviewsState = INITIAL_STATE,
+//   action: Action
+// ): ReviewsState {
+//   switch (action.type) {
+//     case GET_REVIEWS:
+//       return { ...state, userReviews: action.payload };
+
+//     case ADD_REVIEW:
+//       return { ...state, userReviews: [...state.userReviews, action.payload] };
+
+//     case DELETE_REVIEW:
+//       return {
+//         ...state,
+//         userReviews: state.userReviews.filter(
+//           (task) => task._id !== action.payload
+//         ),
+//       };
+
+//     case UPDATE_REVIEW:
+//       return {
+//         ...state,
+//         userReviews: state.userReviews.map((task) =>
+//           task._id === action.payload._id
+//             ? { ...task, ...action.payload }
+//             : task
+//         ),
+//       };
+
+//     default:
+//       return state;
 //   }
-  
-//   export default tasksReducer;
-  
- 
+// }
 
+// export default tasksReducer;
