@@ -1,27 +1,14 @@
-// import { applyMiddleware, combineReducers, createStore, Store } from "redux";
-// import { thunk } from "redux-thunk";
-// import { loggedInUserStateType, UserType } from "../src/types/user.types";
+import { applyMiddleware, combineReducers, createStore } from "redux";
+import { thunk } from "redux-thunk";
 
-// // reducers import >>
-// import userReducer from "./reducers/user.reducer";
+const rootReducer = combineReducers({
+  userModule: userReducer,
+});
 
-// interface RootState {
-//   userModule: loggedInUserStateType;
-// }
+const store = createStore(rootReducer, applyMiddleware(thunk));
 
-// const rootReducer = combineReducers<RootState>({
-//   userModule: userReducer,
-// });
+// This is for debugging purposes.
+// make sure to remove this in production ❗
+window.gStore = store;
 
-// const store: Store<RootState> = createStore(
-//   rootReducer,
-//   applyMiddleware(thunk)
-// );
-
-// // This is for debugging purposes.
-// // make sure to remove this in production ❗
-// if (typeof window !== "undefined") {
-//   (window as any).gStore = store;
-// }
-
-// export default store;
+export default store;
