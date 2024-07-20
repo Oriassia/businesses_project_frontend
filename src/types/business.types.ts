@@ -5,6 +5,7 @@ interface IContactInfo {
 }
 
 export interface IBusiness {
+
   _id: string;
   name: string;
   image: string;
