@@ -1,5 +1,5 @@
 // Define UserType
-export interface UserType {
+export interface IUser {
   userId: string;
   username: string;
   firstName: string;
@@ -9,24 +9,12 @@ export interface UserType {
 }
 
 // Define the state type
-export type LoggedInUserStateType = UserType | null | undefined;
-
-// Import action types
-
-// Define initial state type
-export interface InitialStateType {
-  loggedInUser: LoggedInUserStateType;
-}
-
-// Initial state
-export const INITIAL_STATE: InitialStateType = {
-  loggedInUser: null,
-};
+export type LoggedInUserStateType = IUser | null | undefined;
 
 // Define action interfaces
-export interface actionType {
+export interface IAction {
   type: string;
-  payload: UserType;
+  payload?: IUser;
 }
 
-export type UserActionTypes = Partial<actionType>;
+export type UserActionTypes = Partial<IAction>;

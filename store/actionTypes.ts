@@ -1,3 +1,6 @@
 //USER
 export const SET_LOGGEDIN_USER = "SET_LOGGEDIN_USER";
 export const LOGOUT_USER = "LOGOUT_USER";
+
+//BUSINESS
+export const GET_BUSINESSES = "GET_BUSINESSES";
