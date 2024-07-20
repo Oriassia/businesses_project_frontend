@@ -1,21 +1,18 @@
-// business.types.ts
+interface IContactInfo {
+  address: string;
+  phoneNumber: string;
+  websiteLink: string;
+}
 
-export interface Business {
+export interface IBusiness {
+
   _id: string;
   name: string;
   image: string;
   description: string;
   category: string;
-  contactInfo: ContactInfo;
+  contactInfo: IContactInfo[];
   rating: number;
   reviews: string[];
-  summOfReviews: number;
-}
-
-export interface ContactInfo {
-  openAt: string;
-  closeAt: string;
-  address: string;
-  phoneNumber: string;
-  websiteLink: string;
+  createdAt?: string;
 }

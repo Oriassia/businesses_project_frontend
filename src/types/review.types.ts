@@ -1,7 +1,9 @@
-export interface Review {
+export interface IReview {
   _id: string;
   user: string;
+  content: string;
   business: string;
-  likes: number;
-  stars: number;
+  likes: string[];
+  rating: number;
+  createdAt?: string;
 }
