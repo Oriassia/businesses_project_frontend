@@ -1,7 +1,7 @@
-import { loggedInUserStateType } from "./user.types";
+// import { ILoggedinUserState } from "./user.types";
 
-export interface AuthContextType {
-    loggedInUser: loggedInUserStateType;
-    login: (token: string) => Promise<void>;
-    logout: () => void;
-  }
+// export interface AuthContextType {
+//   loggedInUser: ILoggedinUserState;
+//   login: () => Promise<void>;
+//   logout: () => void;
+// }
