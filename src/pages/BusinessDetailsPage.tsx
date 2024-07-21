@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { renderStars } from "../utils/renderStars";
-import { IBusiness } from "../types/business.types";
+import { IBusiness, IReview } from "../types/business.types";
 import { IoTimeOutline } from "react-icons/io5";
 import { FaShareAlt } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import Modal from "@/components/ui/modal";
 import api from "@/services/api.service";
+import ReviewCard from "@/components/costum/ReviewCard";
 
 const BusinessDetailsPage = () => {
   const [business, setBusiness] = useState<IBusiness | undefined>(undefined);
@@ -152,6 +153,13 @@ const BusinessDetailsPage = () => {
               {business.contactInfo.websiteLink}
             </a>
           </p>
+        </div>
+        <div className="">
+          {business?.reviews.map((review: IReview) => (
+            <>
+              <ReviewCard review={review} />
+            </>
+          ))}
         </div>
       </div>
     </div>

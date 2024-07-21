@@ -8,6 +8,16 @@ interface IContactInfo {
   closeAt: string;
 }
 
+export interface IReview {
+  _id: string;
+  user: string;
+  content: string;
+  business: string;
+  likes: number;
+  rating: number;
+  createdAt?: string;
+}
+
 export interface IBusiness {
   _id: string;
   name: string;
@@ -16,7 +26,7 @@ export interface IBusiness {
   category: string;
   contactInfo: IContactInfo;
   rating: number;
-  reviews: string[];
+  reviews: IReview[];
   createdAt?: string;
   summOfReviews: number;
 }

@@ -139,7 +139,7 @@ const BusinessListPage = () => {
 
   useEffect(() => {
     dispatch(getBusinesses());
-  });
+  }, []);
 
   return (
     <div className="bg-gradient-to-r from-purple-50 via-pink-50 to-red-50 min-h-screen py-8">
