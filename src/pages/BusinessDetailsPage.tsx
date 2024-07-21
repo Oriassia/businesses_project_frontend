@@ -3,32 +3,35 @@ import { useParams } from "react-router-dom";
 import { renderStars } from "../utils/renderStars";
 import { Business } from "../types/business.types";
 import { IoTimeOutline } from "react-icons/io5";
-import { FaShareAlt } from "react-icons/fa";
+import { FaShareAlt, FaThumbsUp } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import Modal from "@/components/ui/modal";
 import api from "@/services/api.service";
+import { Review } from "@/types/review.types";
 
 const BusinessDetailsPage: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const { id } = useParams<{ id: string }>();
   const [business, setBusiness] = useState<Business | undefined>(undefined);
+  const [reviews, setReviews] = useState<Review[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchBusiness = async () => {
+    const fetchBusinessAndReviews = async () => {
       try {
         const response = await api.get(`/businesses/${id}`);
         setBusiness(response.data);
+        setReviews(response.data.reviews);
         setLoading(false);
       } catch (err) {
-        setError("Failed to fetch business details");
+        setError("Failed to fetch business details and reviews");
         setLoading(false);
       }
     };
 
-    fetchBusiness();
+    fetchBusinessAndReviews();
   }, [id]);
 
   const handleOpenModal = () => setShowModal(true);
@@ -56,16 +59,16 @@ const BusinessDetailsPage: React.FC = () => {
         {business.name} {`on ${business.contactInfo.address}`}
       </h1>
       <div className="lg:flex lg:gap-10 py-3 items-center">
-        <div className=" text-[1.1em] flex pb-3 items-center">
+        <div className="text-[1.1em] flex pb-3 items-center">
           <div className="flex items-center">
             {renderStars(business.rating)}
           </div>
           <p className="text-black ml-2 font-bold">{business.rating}</p>
-          <p className=" pl-1 text-gray-500 tracking-wider font-semibold">{`/ ${business.summOfReviews} reviews`}</p>
+          <p className="pl-1 text-gray-500 tracking-wider font-semibold">{`/ ${business.summOfReviews} reviews`}</p>
         </div>
         <div className="flex items-center gap-9 lg:flex-none">
-          <p className=" text-[1.1em] flex flex-row items-center pb-3 gap-1 text-gray-500 font-normal">
-            <IoTimeOutline className=" text-gray-500 font-semibold" />
+          <p className="text-[1.1em] flex flex-row items-center pb-3 gap-1 text-gray-500 font-normal">
+            <IoTimeOutline className="text-gray-500 font-semibold" />
             Closes at {business.contactInfo.closeAt}
           </p>
           <div className="flex items-center pb-3">
@@ -92,7 +95,7 @@ const BusinessDetailsPage: React.FC = () => {
           <p className="p-5 bg-cyan-50 rounded-md text-xl">
             {business.contactInfo.phoneNumber}
           </p>
-          <div className=" mt-4 p-5 bg-cyan-50 rounded-md">
+          <div className="mt-4 p-5 bg-cyan-50 rounded-md">
             <p className="mb-4">Did you manage to reach them?</p>
             <div className="flex space-x-4">
               <Button
@@ -135,7 +138,7 @@ const BusinessDetailsPage: React.FC = () => {
       <div>
         <h1>Info</h1>
         <p className="font-medium my-2">Description:</p>
-        <div className="flex  ">
+        <div className="flex">
           <p className="text-gray-700 mb-4 lg:w-[50em]">
             {isExpanded
               ? business.description
@@ -173,6 +176,32 @@ const BusinessDetailsPage: React.FC = () => {
             </a>
           </p>
         </div>
+      </div>
+      <div>
+        <h2 className="text-2xl font-bold mb-4">Reviews</h2>
+        {reviews.length > 0 ? (
+          reviews.map((review) => (
+            <div
+              key={review._id}
+              className="mb-4 p-4 bg-white border border-gray-200 rounded-lg shadow-lg"
+            >
+              <div className="flex items-center mb-2">
+                <div className="flex text-yellow-500">
+                  {renderStars(review.rating)}
+                </div>
+                <p className="text-gray-700 ml-2 font-bold">{review.rating}</p>
+              </div>
+              <p className="text-gray-600 mb-2">{review.user}</p>
+              <p className="text-gray-600 mb-2">{review.content}</p>
+              <div className="flex items-center">
+                <FaThumbsUp className="text-gray-500" />
+                <p className="text-gray-600 ml-2">{review.likes} likes</p>
+              </div>
+            </div>
+          ))
+        ) : (
+          <p className="text-gray-600">No reviews yet.</p>
+        )}
       </div>
     </div>
   );
