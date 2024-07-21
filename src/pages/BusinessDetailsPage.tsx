@@ -26,12 +26,21 @@ const BusinessDetailsPage = () => {
   const handleOpenModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
 
-  if (!business) {
-    return <div>Business not found</div>;
-  }
   const toggleDescription = () => {
     setIsExpanded(!isExpanded);
   };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
+
+  if (!business) {
+    return <div>Business not found</div>;
+  }
 
   return (
     <div className="lg:px-[5em] px-[1em]">
@@ -120,7 +129,7 @@ const BusinessDetailsPage = () => {
         <h1>Info</h1>
         <p className="font-medium my-2">Description:</p>
         <div className="flex  ">
-          <p className="text-gray-700 mb-4 w-[50em]">
+          <p className="text-gray-700 mb-4 lg:w-[50em]">
             {isExpanded
               ? business.description
               : `${business.description.substring(0, 300)}...  `}
