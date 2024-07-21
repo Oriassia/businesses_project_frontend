@@ -1,97 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { renderStars } from "../utils/renderStars";
-import { Business } from "../types/business.types";
+import { IBusiness } from "../types/business.types";
 import { IoTimeOutline } from "react-icons/io5";
 import { FaShareAlt } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import Modal from "@/components/ui/modal";
+import api from "@/services/api.service";
 
-const businesses: Business[] = [
-  {
-    _id: "66993caafa57e0d1c3f6c2dc",
-    name: "Café Roastery",
-    image:
-      "https://images.pexels.com/photos/887723/pexels-photo-887723.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-    description:
-      "If you're looking to elevate your coffee experience, Café Roastery awaits you! From the moment you step inside, you're greeted by a warm ambiance and an extensive selection of artisanal brews. Our skilled baristas take pride in crafting each cup with care, using only the finest beans sourced from around the world.At Café Roastery, our menu features a delightful array of blends and single-origin coffees, alongside an assortment of delectable pastries and light bites. Whether you're craving a bold espresso or a smooth latte, you'll find something to satisfy your taste. For those who enjoy a touch of sophistication, explore our specialty drinks and seasonal offerings.Parking is a breeze with ample space available, so you can relax and savor your coffee without a second thought. We offer cozy indoor seating and a charming outdoor patio, complete with free Wi-Fi for your convenience. To enhance your visit, enjoy live acoustic performances on select evenings.If you’re tired of the usual coffee routine and crave something exceptional, treat yourself to a visit at Café Roastery. Discover a new level of coffee enjoyment and make every sip an experience to remember.",
-    category: "Cafe",
-    contactInfo: {
-      address: "123 Coffee St.",
-      openAt: "09:00",
-      closeAt: "22:00",
-      phoneNumber: "+5 (123)-456-7890",
-      websiteLink: "https://coffeeshop.com",
-    },
-    rating: 4.5,
-    reviews: ["66993caafa57e0d1c3f6c2df"],
-    summOfReviews: 30,
-  },
-  {
-    _id: "7709e3cfd3e1b8c4a9f7e3d9",
-    name: "Sweet Delights Bakery",
-    image:
-      "https://images.pexels.com/photos/205961/pexels-photo-205961.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-    description: "Delicious cakes and pastries made fresh daily.",
-    category: "Bakery",
-    contactInfo: {
-      address: "456 Cake Ave.",
-      openAt: "08:00",
-      closeAt: "18:00",
-      phoneNumber: "+5 (123)-456-7890",
-      websiteLink: "https://sweetdelightsbakery.com",
-    },
-    rating: 4.8,
-    reviews: ["7709e3cfd3e1b8c4a9f7e3d9"],
-    summOfReviews: 30,
-  },
-  {
-    _id: "881a1f9e16b2c3d4f0e1b5c6",
-    name: "Bella Italia Pizzeria",
-    image:
-      "https://images.pexels.com/photos/23017572/pexels-photo-23017572/free-photo-of-pizza-with-basil-leaves.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    description: "Authentic Italian pizza with a variety of toppings.",
-    category: "Restaurant",
-    contactInfo: {
-      address: "789 Pizza Lane",
-      openAt: "11:00",
-      closeAt: "23:00",
-      phoneNumber: "+5 (123)-456-7890",
-      websiteLink: "https://bellaitaliapizzeria.com",
-    },
-    rating: 4.7,
-    reviews: ["881a1f9e16b2c3d4f0e1b5c6"],
-    summOfReviews: 30,
-  },
-  {
-    _id: "992b2f8c6e4a1b2d3f5c6e4a",
-    name: "Sakura Sushi Bar",
-    image:
-      "https://images.pexels.com/photos/2323391/pexels-photo-2323391.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    description: "Fresh and delicious sushi made with the finest ingredients.",
-    category: "Restaurant",
-    contactInfo: {
-      address: "101 Sushi St.",
-      openAt: "10:00",
-      closeAt: "22:00",
-      phoneNumber: "+5 (123)-456-7890",
-      websiteLink: "https://sakurazushi.com",
-    },
-    rating: 4.6,
-    reviews: ["992b2f8c6e4a1b2d3f5c6e4a"],
-    summOfReviews: 30,
-  },
-];
-
-const BusinessDetailsPage: React.FC = () => {
+const BusinessDetailsPage = () => {
+  const [business, setBusiness] = useState<IBusiness | undefined>(undefined);
   const [showModal, setShowModal] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
-  const { id } = useParams<{ id: string }>();
-  const [business, setBusiness] = useState<Business | undefined>(undefined);
+  const { id } = useParams();
+
+  async function fetchBusiness() {
+    const { data } = await api.get(`/businesses/${id}`);
+    setBusiness(data);
+  }
 
   useEffect(() => {
-    const foundBusiness = businesses.find((b) => b._id === id);
-    setBusiness(foundBusiness);
+    fetchBusiness();
   }, [id]);
 
   const handleOpenModal = () => setShowModal(true);
@@ -126,6 +55,7 @@ const BusinessDetailsPage: React.FC = () => {
             <FaShareAlt />
           </div>
         </div>
+        <span className="text-gray-600 mb-2">{business.category}</span>
       </div>
       <div className="flex lg:gap-10 gap-2">
         <Button
@@ -202,10 +132,6 @@ const BusinessDetailsPage: React.FC = () => {
             </button>
           </p>
         </div>
-        <p className="text-gray-600 mb-2">
-          <span className="font-medium text-black">Category:</span>{" "}
-          {business.category}
-        </p>
         <div className="mb-4">
           <h3 className="font-semibold mb-1">Contact Info</h3>
           <p className="text-gray-600 mb-1">

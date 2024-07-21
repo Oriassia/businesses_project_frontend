@@ -26,7 +26,10 @@ import { FaLocationArrow } from "react-icons/fa";
 import { GiRotaryPhone } from "react-icons/gi";
 import { FaClock } from "react-icons/fa";
 import { TbWorldWww } from "react-icons/tb";
-import { Business } from "@/types/business.types";
+import { IBusiness } from "@/types/business.types";
+import { useSelector } from "react-redux";
+import { RootState, useAppDispatch } from "../../store/storeIndex";
+import { getBusinesses } from "../../store/actions/business.actions";
 
 const categories = [
   { label: "Nearby", icon: <FaMapMarkerAlt /> },
@@ -40,7 +43,7 @@ const categories = [
   { label: "Free WiFi", icon: <FaWifi /> },
 ];
 
-const shop: Business = {
+const shop: IBusiness = {
   _id: "66993caafa57e0d1c3f6c2dc",
   name: "Café Roastery",
   image:
@@ -59,7 +62,7 @@ const shop: Business = {
   summOfReviews: 30,
 };
 
-const bakery: Business = {
+const bakery: IBusiness = {
   _id: "7709e3cfd3e1b8c4a9f7e3d9",
   name: "Sweet Delights Bakery",
   image:
@@ -78,7 +81,7 @@ const bakery: Business = {
   summOfReviews: 30,
 };
 
-const pizzaPlace: Business = {
+const pizzaPlace: IBusiness = {
   _id: "881a1f9e16b2c3d4f0e1b5c6",
   name: "Bella Italia Pizzeria",
   image:
@@ -97,7 +100,7 @@ const pizzaPlace: Business = {
   summOfReviews: 30,
 };
 
-const sushiBar: Business = {
+const sushiBar: IBusiness = {
   _id: "992b2f8c6e4a1b2d3f5c6e4a",
   name: "Sakura Sushi Bar",
   image:
@@ -116,21 +119,26 @@ const sushiBar: Business = {
   summOfReviews: 30,
 };
 
-const BusinessListPage: React.FC = () => {
+const BusinessListPage = () => {
   const navigate = useNavigate();
-  const [businesses, setBusinesses] = useState<Business[]>([
-    shop,
-    bakery,
-    pizzaPlace,
-    sushiBar,
-  ]);
+  // const [businesses, setBusinesses] = useState<IBusiness[]>([
+  //   shop,
+  //   bakery,
+  //   pizzaPlace,
+  //   sushiBar,
+  // ]);
+
+  const { businesses } = useSelector(
+    (state: RootState) => state.businessModule
+  );
+  const dispatch = useAppDispatch();
 
   const handleCardClick = (id: string) => {
     navigate(`/business/${id}`);
   };
 
   useEffect(() => {
-    setBusinesses(businesses);
+    dispatch(getBusinesses());
   });
 
   return (
@@ -197,7 +205,7 @@ const BusinessListPage: React.FC = () => {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-          {businesses.map((business) => (
+          {businesses?.map((business) => (
             <div
               key={business._id}
               className="relative bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105 hover:shadow-xl"

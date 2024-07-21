@@ -1,16 +1,22 @@
 import api from "@/services/api.service";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../../store/storeIndex";
 import { fetchLoggedInUser } from "../../store/actions/user.actions";
 import { IUserLoginData } from "@/types/user.types";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage: React.FC = () => {
-  const [error, setError] = useState<string | null>(null);
   const { loggedInUser } = useSelector((state: RootState) => state.userModule);
-  console.log(loggedInUser);
-
+  const [error, setError] = useState<string | null>(null);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (loggedInUser !== null) {
+      navigate("/");
+    }
+  }, []);
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -21,17 +27,14 @@ const LoginPage: React.FC = () => {
       password: formData.get("password"),
     };
     try {
-      login(userLoginData);
+      const { data } = await api.post("/auth/login", userLoginData);
+      localStorage.setItem("token", data.token);
       dispatch(fetchLoggedInUser());
+      navigate("/");
     } catch (error) {
       console.log(error);
     }
   };
-
-  async function login(userLoginData: IUserLoginData) {
-    const { data } = await api.post("/auth/login", userLoginData);
-    localStorage.setItem("token", data.token);
-  }
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">

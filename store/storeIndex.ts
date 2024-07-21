@@ -1,10 +1,12 @@
 import { applyMiddleware, combineReducers, createStore, Action } from "redux";
 import { thunk, ThunkDispatch } from "redux-thunk";
-import userReducer from "./reducers/user.reducer";
 import { useDispatch } from "react-redux";
+import userReducer from "./reducers/user.reducer";
+import businessReducer from "./reducers/business.reducer";
 
 const rootReducer = combineReducers({
   userModule: userReducer,
+  businessModule: businessReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

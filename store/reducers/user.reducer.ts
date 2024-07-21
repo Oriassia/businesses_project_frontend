@@ -1,5 +1,5 @@
 import { ILoggedinUserState, UserActionTypes } from "@/types/user.types";
-import { SET_LOGGEDIN_USER } from "../actionTypes";
+import { LOGOUT_USER, SET_LOGGEDIN_USER } from "../actionTypes";
 
 const INITIAL_STATE: ILoggedinUserState = {
   loggedInUser: null,
@@ -14,6 +14,8 @@ function userReducer(
     case SET_LOGGEDIN_USER:
       return { ...state, loggedInUser: action.payload };
 
+    case LOGOUT_USER:
+      return { ...state, loggedInUser: null };
     default:
       return state;
   }

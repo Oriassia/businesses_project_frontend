@@ -1,21 +1,25 @@
-// import { IBusiness } from "../../src/types/business.types";
+import { GET_BUSINESSES } from "../../store/actionTypes";
+import {
+  BusinessActionTypes,
+  BusinessesInitialStateType,
+} from "../../src/types/business.types";
 
-// const BUSINESS_INITIAL_STATE: IBusiness | null = null;
-// // Reducer function
-// function userReducer(
-//   state = INITIAL_STATE,
-//   action: UserActionTypes
-// ): ILoggedinUserInitialState {
-//   switch (action.type) {
-//     case SET_LOGGEDIN_USER:
-//       return { ...state, loggedInUser: action.payload };
+const BUSINESS_INITIAL_STATE: BusinessesInitialStateType = {
+  businesses: null,
+};
 
-//     case LOGOUT_USER:
-//       return { ...state, loggedInUser: null };
+// Reducer function
+function businessReducer(
+  state = BUSINESS_INITIAL_STATE,
+  action: BusinessActionTypes
+): BusinessesInitialStateType {
+  switch (action.type) {
+    case GET_BUSINESSES:
+      return { ...state, businesses: action.payload };
 
-//     default:
-//       return state;
-//   }
-// }
+    default:
+      return state;
+  }
+}
 
-// export default userReducer;
+export default businessReducer;

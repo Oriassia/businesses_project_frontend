@@ -1,7 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { RootState, useAppDispatch } from "../../store/storeIndex";
 
 function HomePage() {
-  return <div>HomePage</div>;
+  // const { loggedInUser } = useSelector((state: RootState) => state.userModule);
+
+  return (
+    <>
+      <div>HomePage</div>;
+    </>
+  );
 }
 
 export default HomePage;
