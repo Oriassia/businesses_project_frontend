@@ -1,3 +1,5 @@
+import { SET_LOGGEDIN_USER } from "store/actionTypes";
+
 // Define UserType
 export interface IUser {
   userId: string;
@@ -8,13 +10,18 @@ export interface IUser {
   createdAt?: string; // Optional property
 }
 
-// Define the state type
-export type LoggedInUserStateType = IUser | null | undefined;
-
-// Define action interfaces
-export interface IAction {
-  type: string;
-  payload?: IUser;
+export interface ILoggedinUserState {
+  loggedInUser: IUser | null;
 }
 
-export type UserActionTypes = Partial<IAction>;
+export interface SetLoggedinUserAction {
+  type: typeof SET_LOGGEDIN_USER;
+  payload: IUser;
+}
+
+export type UserActionTypes = SetLoggedinUserAction;
+
+export interface IUserLoginData {
+  username: FormDataEntryValue | null;
+  password: FormDataEntryValue | null;
+}

@@ -1,21 +1,37 @@
+import api from "@/services/api.service";
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState, useAppDispatch } from "../../store/storeIndex";
+import { fetchLoggedInUser } from "../../store/actions/user.actions";
+import { IUserLoginData } from "@/types/user.types";
 
 const LoginPage: React.FC = () => {
-  const [username, setUsername] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
+  const { loggedInUser } = useSelector((state: RootState) => state.userModule);
+  console.log(loggedInUser);
 
-  const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
+  const dispatch = useAppDispatch();
+
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // send a request to backend to log in
+    const formData = new FormData(e.currentTarget);
 
-    if (username === "admin" && password === "admin") {
-      console.log("Logged in successfully");
-      setError(null);
-    } else {
-      setError("Invalid username or password");
+    const userLoginData: IUserLoginData = {
+      username: formData.get("username"),
+      password: formData.get("password"),
+    };
+    try {
+      login(userLoginData);
+      dispatch(fetchLoggedInUser());
+    } catch (error) {
+      console.log(error);
     }
   };
+
+  async function login(userLoginData: IUserLoginData) {
+    const { data } = await api.post("/auth/login", userLoginData);
+    localStorage.setItem("token", data.token);
+  }
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
@@ -30,8 +46,9 @@ const LoginPage: React.FC = () => {
             <input
               type="text"
               id="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              name="username"
+              // value={username}
+              // onChange={(e) => setUsername(e.target.value)}
               className="w-full p-2 border border-gray-300 rounded"
               required
             />
@@ -43,8 +60,9 @@ const LoginPage: React.FC = () => {
             <input
               type="password"
               id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              name="password"
+              // value={password}
+              // onChange={(e) => setPassword(e.target.value)}
               className="w-full p-2 border border-gray-300 rounded"
               required
             />

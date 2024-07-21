@@ -7,14 +7,12 @@ const api = axios.create({
 
 api.interceptors.request.use(
   (config) => {
-    let token = localStorage.getItem("jwt-taskify");
+    let token = localStorage.getItem("token");
+
     if (token) {
-      // removing the first and last character of the token, which are quotes
-      token = token?.slice(1, -1);
-      if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
-      }
+      config.headers.Authorization = `Bearer ${token}`;
     }
+
     return config;
   },
   (error) => {

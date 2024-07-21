@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Business } from "../types/business.types";
 import { useNavigate } from "react-router-dom";
 import { renderStars } from "../utils/renderStars";
 import {
@@ -27,6 +26,7 @@ import { FaLocationArrow } from "react-icons/fa";
 import { GiRotaryPhone } from "react-icons/gi";
 import { FaClock } from "react-icons/fa";
 import { TbWorldWww } from "react-icons/tb";
+import { Business } from "@/types/business.types";
 
 const categories = [
   { label: "Nearby", icon: <FaMapMarkerAlt /> },
