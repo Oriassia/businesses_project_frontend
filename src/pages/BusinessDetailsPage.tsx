@@ -1,33 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { renderStars } from "../utils/renderStars";
-import { Business } from "../types/business.types";
+import { IBusiness } from "../types/business.types";
 import { IoTimeOutline } from "react-icons/io5";
 import { FaShareAlt } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import Modal from "@/components/ui/modal";
 import api from "@/services/api.service";
 
-const BusinessDetailsPage: React.FC = () => {
+const BusinessDetailsPage = () => {
+  const [business, setBusiness] = useState<IBusiness | undefined>(undefined);
   const [showModal, setShowModal] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
-  const { id } = useParams<{ id: string }>();
-  const [business, setBusiness] = useState<Business | undefined>(undefined);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const { id } = useParams();
+
+  async function fetchBusiness() {
+    const { data } = await api.get(`/businesses/${id}`);
+    setBusiness(data);
+  }
 
   useEffect(() => {
-    const fetchBusiness = async () => {
-      try {
-        const response = await api.get(`/businesses/${id}`);
-        setBusiness(response.data);
-        setLoading(false);
-      } catch (err) {
-        setError("Failed to fetch business details");
-        setLoading(false);
-      }
-    };
-
     fetchBusiness();
   }, [id]);
 
@@ -72,6 +64,7 @@ const BusinessDetailsPage: React.FC = () => {
             <FaShareAlt />
           </div>
         </div>
+        <span className="text-gray-600 mb-2">{business.category}</span>
       </div>
       <div className="flex lg:gap-10 gap-2">
         <Button
@@ -148,10 +141,6 @@ const BusinessDetailsPage: React.FC = () => {
             </button>
           </p>
         </div>
-        <p className="text-gray-600 mb-2">
-          <span className="font-medium text-black">Category:</span>{" "}
-          {business.category}
-        </p>
         <div className="mb-4">
           <h3 className="font-semibold mb-1">Contact Info</h3>
           <p className="text-gray-600 mb-1">

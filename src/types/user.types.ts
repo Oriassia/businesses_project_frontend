@@ -1,4 +1,4 @@
-import { SET_LOGGEDIN_USER } from "store/actionTypes";
+import { LOGOUT_USER, SET_LOGGEDIN_USER } from "store/actionTypes";
 
 // Define UserType
 export interface IUser {
@@ -19,7 +19,11 @@ export interface SetLoggedinUserAction {
   payload: IUser;
 }
 
-export type UserActionTypes = SetLoggedinUserAction;
+export interface LogoutUserAction {
+  type: typeof LOGOUT_USER;
+}
+
+export type UserActionTypes = SetLoggedinUserAction | LogoutUserAction;
 
 export interface IUserLoginData {
   username: FormDataEntryValue | null;
