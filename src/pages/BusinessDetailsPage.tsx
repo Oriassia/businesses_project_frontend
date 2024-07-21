@@ -6,103 +6,49 @@ import { IoTimeOutline } from "react-icons/io5";
 import { FaShareAlt } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import Modal from "@/components/ui/modal";
-
-const businesses: Business[] = [
-  {
-    _id: "66993caafa57e0d1c3f6c2dc",
-    name: "Café Roastery",
-    image:
-      "https://images.pexels.com/photos/887723/pexels-photo-887723.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-    description:
-      "If you're looking to elevate your coffee experience, Café Roastery awaits you! From the moment you step inside, you're greeted by a warm ambiance and an extensive selection of artisanal brews. Our skilled baristas take pride in crafting each cup with care, using only the finest beans sourced from around the world.At Café Roastery, our menu features a delightful array of blends and single-origin coffees, alongside an assortment of delectable pastries and light bites. Whether you're craving a bold espresso or a smooth latte, you'll find something to satisfy your taste. For those who enjoy a touch of sophistication, explore our specialty drinks and seasonal offerings.Parking is a breeze with ample space available, so you can relax and savor your coffee without a second thought. We offer cozy indoor seating and a charming outdoor patio, complete with free Wi-Fi for your convenience. To enhance your visit, enjoy live acoustic performances on select evenings.If you’re tired of the usual coffee routine and crave something exceptional, treat yourself to a visit at Café Roastery. Discover a new level of coffee enjoyment and make every sip an experience to remember.",
-    category: "Cafe",
-    contactInfo: {
-      address: "123 Coffee St.",
-      openAt: "09:00",
-      closeAt: "22:00",
-      phoneNumber: "+5 (123)-456-7890",
-      websiteLink: "https://coffeeshop.com",
-    },
-    rating: 4.5,
-    reviews: ["66993caafa57e0d1c3f6c2df"],
-    summOfReviews: 30,
-  },
-  {
-    _id: "7709e3cfd3e1b8c4a9f7e3d9",
-    name: "Sweet Delights Bakery",
-    image:
-      "https://images.pexels.com/photos/205961/pexels-photo-205961.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-    description: "Delicious cakes and pastries made fresh daily.",
-    category: "Bakery",
-    contactInfo: {
-      address: "456 Cake Ave.",
-      openAt: "08:00",
-      closeAt: "18:00",
-      phoneNumber: "+5 (123)-456-7890",
-      websiteLink: "https://sweetdelightsbakery.com",
-    },
-    rating: 4.8,
-    reviews: ["7709e3cfd3e1b8c4a9f7e3d9"],
-    summOfReviews: 30,
-  },
-  {
-    _id: "881a1f9e16b2c3d4f0e1b5c6",
-    name: "Bella Italia Pizzeria",
-    image:
-      "https://images.pexels.com/photos/23017572/pexels-photo-23017572/free-photo-of-pizza-with-basil-leaves.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    description: "Authentic Italian pizza with a variety of toppings.",
-    category: "Restaurant",
-    contactInfo: {
-      address: "789 Pizza Lane",
-      openAt: "11:00",
-      closeAt: "23:00",
-      phoneNumber: "+5 (123)-456-7890",
-      websiteLink: "https://bellaitaliapizzeria.com",
-    },
-    rating: 4.7,
-    reviews: ["881a1f9e16b2c3d4f0e1b5c6"],
-    summOfReviews: 30,
-  },
-  {
-    _id: "992b2f8c6e4a1b2d3f5c6e4a",
-    name: "Sakura Sushi Bar",
-    image:
-      "https://images.pexels.com/photos/2323391/pexels-photo-2323391.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-    description: "Fresh and delicious sushi made with the finest ingredients.",
-    category: "Restaurant",
-    contactInfo: {
-      address: "101 Sushi St.",
-      openAt: "10:00",
-      closeAt: "22:00",
-      phoneNumber: "+5 (123)-456-7890",
-      websiteLink: "https://sakurazushi.com",
-    },
-    rating: 4.6,
-    reviews: ["992b2f8c6e4a1b2d3f5c6e4a"],
-    summOfReviews: 30,
-  },
-];
+import api from "@/services/api.service";
 
 const BusinessDetailsPage: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const { id } = useParams<{ id: string }>();
   const [business, setBusiness] = useState<Business | undefined>(undefined);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const foundBusiness = businesses.find((b) => b._id === id);
-    setBusiness(foundBusiness);
+    const fetchBusiness = async () => {
+      try {
+        const response = await api.get(`/businesses/${id}`);
+        setBusiness(response.data);
+        setLoading(false);
+      } catch (err) {
+        setError("Failed to fetch business details");
+        setLoading(false);
+      }
+    };
+
+    fetchBusiness();
   }, [id]);
 
   const handleOpenModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
 
-  if (!business) {
-    return <div>Business not found</div>;
-  }
   const toggleDescription = () => {
     setIsExpanded(!isExpanded);
   };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
+
+  if (!business) {
+    return <div>Business not found</div>;
+  }
 
   return (
     <div className="lg:px-[5em] px-[1em]">
@@ -190,7 +136,7 @@ const BusinessDetailsPage: React.FC = () => {
         <h1>Info</h1>
         <p className="font-medium my-2">Description:</p>
         <div className="flex  ">
-          <p className="text-gray-700 mb-4 w-[50em]">
+          <p className="text-gray-700 mb-4 lg:w-[50em]">
             {isExpanded
               ? business.description
               : `${business.description.substring(0, 300)}...  `}
