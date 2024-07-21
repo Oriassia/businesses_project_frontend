@@ -31,8 +31,6 @@ import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../../store/storeIndex";
 import { getBusinesses } from "../../store/actions/business.actions";
 
-import api from "@/services/api.service";
-
 const categories = [
   { label: "Nearby", icon: <FaMapMarkerAlt /> },
   { label: "Top Rated", icon: <FaStar /> },
@@ -141,8 +139,7 @@ const BusinessListPage = () => {
 
   useEffect(() => {
     dispatch(getBusinesses());
-  },[]);
-
+  }, []);
 
   return (
     <div className="bg-gradient-to-r from-purple-50 via-pink-50 to-red-50 min-h-screen py-8">
@@ -209,7 +206,6 @@ const BusinessListPage = () => {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
           {businesses?.map((business) => (
-
             <div
               key={business._id}
               className=" bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105 hover:shadow-xl"
