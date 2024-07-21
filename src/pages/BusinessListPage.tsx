@@ -143,7 +143,7 @@ const BusinessListPage = () => {
 
   return (
     <div className="bg-gradient-to-r from-purple-50 via-pink-50 to-red-50 min-h-screen py-8">
-      <div className="container mx-auto px-4">
+      <div className=" lg:px-[5em]">
         <div className="relative">
           <h1 className="text-4xl font-bold w-fit text-gray-800 mb-4 transition-transform transform hover:scale-105">
             Uncover Remarkable Places
@@ -208,19 +208,34 @@ const BusinessListPage = () => {
           {businesses?.map((business) => (
             <div
               key={business._id}
-              className="relative bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105 hover:shadow-xl"
-              onClick={() => handleCardClick(business._id)}
+              className=" bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105 hover:shadow-xl"
             >
               <img
                 src={business.image}
                 alt={business.name}
-                className="w-full h-48 object-cover rounded-t-lg"
+                onClick={() => handleCardClick(business._id)}
+                className="w-full h-48 cursor-pointer object-cover rounded-t-lg"
               />
               <div className="p-4">
-                <h2 className="text-xl font-semibold text-gray-800 mb-2 hover:text-pink-600 transition-colors duration-300">
+                <h2
+                  className="text-xl font-semibold cursor-pointer text-gray-800 mb-2 hover:text-pink-600 transition-colors duration-300"
+                  onClick={() => handleCardClick(business._id)}
+                >
                   {business.name}
                 </h2>
-                <p className="text-gray-600 mb-2">{business.description}</p>
+                <p className="text-gray-700 mb-4">
+                  {expandedIndex === index
+                    ? business.description
+                    : `${business.description.substring(0, 100)}...  `}
+                  <button
+                    onClick={() => toggleDescription(index)}
+                    className="text-cyan-800 font-semibold underline mb-4 lg:pl-3 hover:underline"
+                  >
+                    {expandedIndex === index
+                      ? "Close description"
+                      : "Show More"}
+                  </button>
+                </p>
                 <p className="text-gray-500 mb-2">
                   <span className=" font-semibold text-[1.1em] text-black">
                     Category:{" "}
