@@ -1,17 +1,18 @@
 import { FaThumbsUp } from "react-icons/fa";
 import { renderStars } from "@/utils/renderStars";
-import { IReview } from "@/types/business.types";
+import { RootState, useAppDispatch } from "../../../../store/storeIndex";
+import { useSelector } from "react-redux";
+import { deleteReview } from "../../../../store/actions/review.actions";
 
-interface BusinessReviewsProps {
-  reviews: IReview[];
-}
+function DetailsPageReviews() {
+  const { reviews } = useSelector((state: RootState) => state.reviewsModule);
+  const dispatch = useAppDispatch();
 
-function DetailsPageReviews({ reviews }: BusinessReviewsProps) {
   return (
     <div>
       <h2 className="text-2xl font-bold mb-4">Reviews</h2>
-      {reviews.length > 0 ? (
-        reviews.map((review) => (
+      {reviews && reviews.length > 0 ? (
+        reviews?.map((review) => (
           <div
             key={review._id}
             className="mb-4 p-4 bg-white border border-gray-200 rounded-lg shadow-lg"
@@ -28,6 +29,12 @@ function DetailsPageReviews({ reviews }: BusinessReviewsProps) {
               <FaThumbsUp className="text-gray-500" />
               <p className="text-gray-600 ml-2">{review.likes} likes</p>
             </div>
+            <button
+              onClick={() => dispatch(deleteReview(review._id))}
+              className="text-black"
+            >
+              delete
+            </button>
           </div>
         ))
       ) : (

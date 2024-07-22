@@ -25,11 +25,10 @@ const BusinessesPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
+  const dispatch = useAppDispatch();
   const { businesses } = useSelector(
     (state: RootState) => state.businessModule
   );
-
-  const dispatch = useAppDispatch();
 
   const uniqueCategories: string[] | undefined = businesses
     ? Array.from(new Set(businesses.map((business) => business.category)))
