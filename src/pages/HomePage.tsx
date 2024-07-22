@@ -7,19 +7,23 @@ import {
   FaPizzaSlice,
   FaGlassCheers,
   FaShoppingCart,
+  FaUserFriends,
+  FaMobileAlt,
+  FaShieldAlt,
 } from "react-icons/fa";
 import { AiFillHeart } from "react-icons/ai";
 import { motion } from "framer-motion";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import bgBanana from "../imgs/bgBanana.jpg";
+import { TbHandClick } from "react-icons/tb";
 
 const HomePage: React.FC = () => {
   return (
     <div className="lg:min-h-screen bg-gradient-to-r from-purple-50 via-pink-50 to-red-50">
       <div>
         <div
-          className="bg-cover bg-center lg:h-screen lg:px-[5em] py-[1em] px-[1em]"
+          className="bg-cover bg-center lg:min-h-screen lg:px-[5em] py-[1em] px-[1em]"
           style={{
             backgroundImage: `linear-gradient(to right, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.9) 20%, rgba(255, 255, 255, 0.7) 40%, rgba(255, 255, 255, 0.4) 60%, rgba(255, 255, 255, 0.1) 80%, rgba(255, 255, 255, 0) 100%), url(${bgBanana})`,
           }}
@@ -39,15 +43,63 @@ const HomePage: React.FC = () => {
               animate={{ opacity: 1 }}
               transition={{ duration: 1.5 }}
             >
-              Share your experiences and find the best places around you.
+              Share your experiences and find the best places around
+              <span className="text-pink-800 uppercase font-bold"> you</span>.
             </motion.p>
-            <Link to="/businesses">
+            <div className="marquee bg-pink-200 bg-opacity-50 py-2 mb-8 text-black font-semibold ">
+              <div className="marquee-content">
+                <span className="mr-10">
+                  "Amazing coffee at Joe's Café! Thanks to the review service
+                  for the recommendation!" - Sarah K.
+                </span>
+                <span className="mr-10">
+                  "The pizza at Mario's Pizzeria is a must-try! Found it on the
+                  review site." - John D.
+                </span>
+                <span className="mr-10">
+                  "Loved the cozy atmosphere at The Reading Room. Great find
+                  through the reviews!" - Emma W.
+                </span>
+                <span className="mr-10">
+                  "Had a fantastic brunch at Sunny Side Up. Highly recommended!"
+                  - Chris P.
+                </span>
+                <span className="mr-10">
+                  "Found the best cocktails at Mix & Mingle thanks to the
+                  community reviews!" - Lisa M.
+                </span>
+                <span className="mr-10">
+                  "The service at Gourmet Grill was top-notch. Thanks for the
+                  heads-up!" - Michael T.
+                </span>
+                <span className="mr-10">
+                  "Discovered the hidden gem, Little Bookstore, through the
+                  reviews. Loved it!" - Alice B.
+                </span>
+                <span className="mr-10">
+                  "Best sushi experience at Sushi World! Grateful for the
+                  recommendation." - Daniel H.
+                </span>
+                <span className="mr-10">
+                  "Great ambiance and food at The Rustic Table. Found it on the
+                  review platform." - Rachel G.
+                </span>
+                <span className="mr-10">
+                  "Enjoyed a delightful evening at The Wine Cellar, thanks to
+                  the reviews!" - Brian S.
+                </span>
+              </div>
+            </div>
+            <Link to="/businesses" className="flex justify-center items-center">
               <motion.button
-                className="px-8 py-3 bg-pink-600 text-white rounded-full shadow-lg hover:bg-pink-700 transition duration-300"
+                className="px-8 py-3 bg-pink-600 text-white rounded-full flex text-[1.3em] justify-center gap-3 items-center  shadow-lg hover:bg-pink-700 transition duration-300"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
               >
-                Explore Now
+                <p>Explore Now</p>{" "}
+                <p>
+                  <TbHandClick />
+                </p>
               </motion.button>
             </Link>
           </header>
@@ -107,7 +159,7 @@ const HomePage: React.FC = () => {
               How It Works
             </motion.h2>
             <motion.p
-              className="text-lg text-gray-600"
+              className="text-[1.3em] text-gray-600"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1.5 }}
@@ -119,7 +171,7 @@ const HomePage: React.FC = () => {
             {[1, 2, 3].map((step, index) => (
               <motion.div
                 key={index}
-                className="bg-white rounded-lg shadow-lg p-8 text-center transition-transform transform hover:-translate-y-2 hover:shadow-2xl"
+                className="bg-white rounded-lg shadow-lg p-8 text-center  transition duration-300 hover:scale-105 hover:shadow-2xl"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.2, duration: 0.8 }}
@@ -133,7 +185,7 @@ const HomePage: React.FC = () => {
                     <h3 className="text-2xl font-bold text-gray-800 mb-2">
                       Search
                     </h3>
-                    <p className="text-gray-600">
+                    <p className="text-gray-600 text-[1.1em]">
                       Find the best places based on your preferences.
                     </p>
                   </>
@@ -144,7 +196,7 @@ const HomePage: React.FC = () => {
                     <h3 className="text-2xl font-bold text-gray-800 mb-2">
                       Review
                     </h3>
-                    <p className="text-gray-600">
+                    <p className="text-gray-600 text-[1.1em]">
                       Share your experiences with the community.
                     </p>
                   </>
@@ -158,7 +210,7 @@ const HomePage: React.FC = () => {
                     <h3 className="text-2xl font-bold text-gray-800 mb-2">
                       Discover
                     </h3>
-                    <p className="text-gray-600">
+                    <p className="text-gray-600 text-[1.1em]">
                       Explore new places based on reviews from others.
                     </p>
                   </>
@@ -168,10 +220,69 @@ const HomePage: React.FC = () => {
           </div>
         </section>
 
-        <section className="py-20 bg-gradient-to-r from-purple-50 via-pink-50 to-red-50">
+        <section className="py-20 lg:px-[5em] px-[1em] bg-gradient-to-t">
           <div className="text-center mb-12">
             <motion.h2
-              className="text-4xl font-bold text-gray-800"
+              className="text-4xl font-bold lg:py-2 text-gray-800"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1 }}
+            >
+              Top Features
+            </motion.h2>
+            <motion.p
+              className=" text-gray-600 text-[1.3em]"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1.5 }}
+            >
+              Discover the amazing features of our review application
+            </motion.p>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <FeatureCard
+              title="User-friendly Interface"
+              description="Easily navigate and find the best places to visit."
+              icon={<FaMobileAlt size={48} className="text-pink-600" />}
+              image="https://images.pexels.com/photos/4565777/pexels-photo-4565777.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+            />
+            <FeatureCard
+              title="Comprehensive Reviews"
+              description="Read detailed reviews and ratings from our community."
+              icon={<FaStar size={48} className="text-pink-600" />}
+              image="https://images.pexels.com/photos/3957616/pexels-photo-3957616.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+            />
+            <FeatureCard
+              title="Wide Range of Categories"
+              description="Explore reviews across various categories and places."
+              icon={<AiFillHeart size={48} className="text-pink-600" />}
+              image="https://images.pexels.com/photos/163822/color-umbrella-red-yellow-163822.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+            />
+            <FeatureCard
+              title="Community Driven"
+              description="Join a vibrant community of reviewers."
+              icon={<FaUserFriends size={48} className="text-pink-600" />}
+              image="https://images.pexels.com/photos/209728/pexels-photo-209728.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+            />
+            <FeatureCard
+              title="Secure and Private"
+              description="Your data is safe with our top-notch security."
+              icon={<FaShieldAlt size={48} className="text-pink-600" />}
+              image="https://images.pexels.com/photos/4291/door-green-closed-lock.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+            />
+            <FeatureCard
+              title="Accessible Anywhere"
+              description="Use our app on any device, anytime."
+              icon={<FaMobileAlt size={48} className="text-pink-600" />}
+              image="https://images.pexels.com/photos/4158/apple-iphone-smartphone-desk.jpg"
+            />
+          </div>
+        </section>
+
+        <section className="py-20 bg-gradient-to-r px-[1em] from-purple-100 via-pink-100 to-red-100">
+          <div className="text-center mb-12">
+            <motion.h2
+              className="text-4xl font-bold text-gray-800 lg:py-2"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1 }}
@@ -179,7 +290,7 @@ const HomePage: React.FC = () => {
               What Our Users Say
             </motion.h2>
             <motion.p
-              className="text-lg text-gray-600"
+              className="text-[1.3em] text-gray-600"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1.5 }}
@@ -204,7 +315,7 @@ const HomePage: React.FC = () => {
                   <h3 className="text-2xl font-bold">Jane Doe</h3>
                   <p>
                     Amazing service! Easily navigate and find the best places to
-                    visit..
+                    visit.
                   </p>
                 </div>
               </div>
@@ -260,4 +371,37 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ title, icon, image }) => {
     </motion.div>
   );
 };
+
+interface FeatureCardProps {
+  title: string;
+  description: string;
+  icon: JSX.Element;
+  image: string;
+}
+
+const FeatureCard: React.FC<FeatureCardProps> = ({
+  title,
+  description,
+  icon,
+  image,
+}) => {
+  return (
+    <motion.div
+      className="relative bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden  transition duration-300 hover:scale-105 hover:shadow-2xl"
+      initial={{ opacity: 0, y: 50 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      <img src={image} alt={title} className="w-full h-48 object-cover" />
+      <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center">
+        <div className="text-center flex flex-col items-center">
+          <p>{icon}</p>
+          <h3 className="text-white text-2xl font-bold mt-2">{title}</h3>
+          <p className="text-white mt-2 px-4">{description}</p>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
 export default HomePage;

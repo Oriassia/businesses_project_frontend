@@ -9,7 +9,7 @@ function DetailsPageReviews() {
   const dispatch = useAppDispatch();
 
   return (
-    <div>
+    <div className="lg:py-10 bg-white p-6 my-8 rounded-lg shadow-xl lg:w-[50em]">
       <h2 className="text-2xl font-bold mb-4">Reviews</h2>
       {reviews && reviews.length > 0 ? (
         reviews?.map((review) => (

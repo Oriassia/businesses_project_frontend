@@ -2,6 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.marquee {
+  white-space: nowrap;
+  overflow: hidden;
+  position: relative;
+}
+
+.marquee-content {
+  display: inline-block;
+  animation: marquee 40s linear infinite;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

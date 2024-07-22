@@ -64,41 +64,38 @@ const BusinessesPage = () => {
 
   return (
     <div className="bg-gradient-to-r from-purple-50 via-pink-50 to-red-50 min-h-screen py-8">
-      <div className=" lg:px-[5em]">
-        <div className="relative">
-          <h1 className="text-4xl font-bold w-fit text-gray-800 mb-4 transition-transform transform hover:scale-105">
-            Explore Remarkable Places
-          </h1>
-        </div>
-        <p className="text-lg text-gray-600 mb-4">
-          Dive into a variety of businesses, from innovative newcomers to
-          beloved classics. <br />
-          Easily find what you need and start exploring now!
-        </p>
-        <div className="flex lg:justify-center text-[2em] lg:gap-6 mb-6">
-          <div className="flex items-center gap-2 text-pink-600">
-            <GrUserExpert />
-            <span className="text-xl font-semibold">Expertly Chosen</span>
+      <div className=" lg:px-[5em] px-[1em]  py-[1em] mb-[2em]">
+        <div className="relative py-20 mb-10 rounded-lg bg-gradient-to-r from-orange-300 via-red-300 to-yellow-300">
+          <div className="absolute inset-0 rounded-lg bg-opacity-50 bg-black z-0"></div>
+          <div className="relative  z-10 text-center ">
+            <h1 className="text-5xl font-extrabold text-pink-200 mb-6">
+              Discover Your Next Favorite Place
+            </h1>
+            <p className="text-xl text-pink-100 mb-8">
+              Explore an extensive collection of top-rated spots. <br />
+              Find new gems and old favorites effortlessly.
+            </p>
           </div>
-          <div className="flex items-center gap-2 text-pink-600">
-            <AiOutlineThunderbolt />
-            <span className="text-xl font-semibold">Quick Access</span>
-          </div>
-          <div className="flex items-center gap-2 text-pink-600">
-            <MdOutlineCategory />
-            <span className="text-xl font-semibold">Diverse Categories</span>
+          <div className="absolute top-0 left-0 w-full h-full overflow-hidden  z-0 rounded-md">
+            <img
+              src="https://images.pexels.com/photos/61127/pexels-photo-61127.jpeg"
+              alt="Background"
+              className="w-full h-full object-cover opacity-40 rounded-md"
+            />
           </div>
         </div>
-
         <div className="flex flex-wrap mb-8 gap-4">
           {/* Desktop version */}
           <div className="hidden md:flex flex-wrap gap-4">
             {uniqueCategories?.map((category) => (
               <button
                 key={category}
-                className="flex items-center gap-2 bg-pink-600 text-white py-2 px-6 rounded-full shadow-lg hover:bg-pink-700 transition duration-300 transform hover:scale-105 hover:shadow-xl"
+                className="flex items-center gap-2 bg-gradient-to-r from-pink-400 to-red-400 text-white py-3 px-8 rounded-full shadow-md hover:from-pink-500 hover:to-purple-500 transition-all duration-300 transform hover:scale-105 hover:shadow-2xl"
               >
                 {category}
+                <span className="ml-2 transition-all duration-300 group-hover:ml-4">
+                  &rarr;
+                </span>
               </button>
             ))}
           </div>
@@ -122,7 +119,6 @@ const BusinessesPage = () => {
             </div>
           </div>
         </div>
-
         {loading ? (
           <SkeletonCards />
         ) : (
