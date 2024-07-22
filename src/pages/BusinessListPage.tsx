@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { renderStars } from "../utils/renderStars";
 import {
@@ -26,7 +26,6 @@ import { FaLocationArrow } from "react-icons/fa";
 import { GiRotaryPhone } from "react-icons/gi";
 import { FaClock } from "react-icons/fa";
 import { TbWorldWww } from "react-icons/tb";
-import { IBusiness } from "@/types/business.types";
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../../store/storeIndex";
 import { getBusinesses } from "../../store/actions/business.actions";
@@ -43,103 +42,46 @@ const categories = [
   { label: "Free WiFi", icon: <FaWifi /> },
 ];
 
-const shop: IBusiness = {
-  _id: "66993caafa57e0d1c3f6c2dc",
-  name: "Café Roastery",
-  image:
-    "https://images.pexels.com/photos/887723/pexels-photo-887723.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-  description: "A great place to drink coffee",
-  category: "Cafe",
-  contactInfo: {
-    address: "123 Coffee St.",
-    openAt: "09:00",
-    closeAt: "22:00",
-    phoneNumber: "123-456-7890",
-    websiteLink: "https://coffeeshop.com",
-  },
-  rating: 4.5,
-  reviews: ["66993caafa57e0d1c3f6c2df"],
-  summOfReviews: 30,
-};
-
-const bakery: IBusiness = {
-  _id: "7709e3cfd3e1b8c4a9f7e3d9",
-  name: "Sweet Delights Bakery",
-  image:
-    "https://images.pexels.com/photos/205961/pexels-photo-205961.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-  description: "Delicious cakes and pastries made fresh daily.",
-  category: "Bakery",
-  contactInfo: {
-    address: "456 Cake Ave.",
-    openAt: "08:00",
-    closeAt: "18:00",
-    phoneNumber: "987-654-3210",
-    websiteLink: "https://sweetdelightsbakery.com",
-  },
-  rating: 4.8,
-  reviews: ["7709e3cfd3e1b8c4a9f7e3d9"],
-  summOfReviews: 30,
-};
-
-const pizzaPlace: IBusiness = {
-  _id: "881a1f9e16b2c3d4f0e1b5c6",
-  name: "Bella Italia Pizzeria",
-  image:
-    "https://images.pexels.com/photos/23017572/pexels-photo-23017572/free-photo-of-pizza-with-basil-leaves.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-  description: "Authentic Italian pizza with a variety of toppings.",
-  category: "Restaurant",
-  contactInfo: {
-    address: "789 Pizza Lane",
-    openAt: "11:00",
-    closeAt: "23:00",
-    phoneNumber: "555-123-4567",
-    websiteLink: "https://bellaitaliapizzeria.com",
-  },
-  rating: 4.7,
-  reviews: ["881a1f9e16b2c3d4f0e1b5c6"],
-  summOfReviews: 30,
-};
-
-const sushiBar: IBusiness = {
-  _id: "992b2f8c6e4a1b2d3f5c6e4a",
-  name: "Sakura Sushi Bar",
-  image:
-    "https://images.pexels.com/photos/2323391/pexels-photo-2323391.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-  description: "Fresh and delicious sushi made with the finest ingredients.",
-  category: "Restaurant",
-  contactInfo: {
-    address: "101 Sushi St.",
-    openAt: "10:00",
-    closeAt: "22:00",
-    phoneNumber: "321-654-9870",
-    websiteLink: "https://sakurazushi.com",
-  },
-  rating: 4.6,
-  reviews: ["992b2f8c6e4a1b2d3f5c6e4a"],
-  summOfReviews: 30,
-};
-
 const BusinessListPage = () => {
   const navigate = useNavigate();
-  // const [businesses, setBusinesses] = useState<IBusiness[]>([
-  //   shop,
-  //   bakery,
-  //   pizzaPlace,
-  //   sushiBar,
-  // ]);
-
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
   const { businesses } = useSelector(
     (state: RootState) => state.businessModule
   );
+
   const dispatch = useAppDispatch();
+
+  const toggleDescription = (index: number) => {
+    if (expandedIndex === index) {
+      setExpandedIndex(null);
+    } else {
+      setExpandedIndex(index);
+    }
+  };
 
   const handleCardClick = (id: string) => {
     navigate(`/business/${id}`);
   };
 
   useEffect(() => {
-    dispatch(getBusinesses());
+    try {
+      dispatch(getBusinesses());
+      setLoading(false);
+    } catch (err) {
+      setError("Failed to fetch businesses");
+      setLoading(false);
+    }
   }, []);
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p>{error}</p>;
+  }
 
   return (
     <div className="bg-gradient-to-r from-purple-50 via-pink-50 to-red-50 min-h-screen py-8">
@@ -205,7 +147,7 @@ const BusinessListPage = () => {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-          {businesses?.map((business) => (
+          {businesses?.map((business, index) => (
             <div
               key={business._id}
               className=" bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105 hover:shadow-xl"
