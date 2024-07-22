@@ -7,10 +7,14 @@ interface IContactInfo {
   openAt: string;
   closeAt: string;
 }
+interface IUserReview {
+  id: string;
+  username: string;
+}
 
 export interface IReview {
   _id: string;
-  user: string;
+  user: IUserReview;
   content: string;
   business: string;
   likes: number;
