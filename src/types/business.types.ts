@@ -1,4 +1,4 @@
-import { GET_BUSINESSES } from "store/actionTypes";
+import { GET_BUSINESSES, GET_BUSINESSES_COUNT } from "store/actionTypes";
 
 interface IContactInfo {
   address: string;
@@ -37,11 +37,22 @@ export interface IBusiness {
 
 export interface BusinessesInitialStateType {
   businesses: IBusiness[] | null;
+  businessesCount: number | null;
 }
 
 export interface GetBusinessesAction {
-  type: typeof GET_BUSINESSES;
-  payload: IBusiness[];
+  type: typeof GET_BUSINESSES | typeof GET_BUSINESSES_COUNT;
+  payload: IBusiness[] | number;
 }
 
 export type BusinessActionTypes = GetBusinessesAction;
+
+export interface IGetBusinessesOptions {
+  params: {
+    name: string | null;
+    category: string | null;
+    rating: string | null;
+    limit: string | null;
+    page: string | null;
+  };
+}
