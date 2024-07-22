@@ -12,6 +12,7 @@ import {
 } from "../ui/dropdown-menu";
 import { Avatar, AvatarFallback } from "../ui/avatar";
 import ModeToggle from "./mode-toggle";
+import { GrOverview } from "react-icons/gr";
 
 const Navbar = () => {
   const { loggedInUser } = useSelector((state: RootState) => state.userModule);
@@ -23,14 +24,22 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="dark:bg-gray-800 lg:px-[5em] px-[1em] dark:text-white text-black bg-pink-300 flex justify-between items-center h-14">
-      <div>
-        <Link className="dark:text-white uppercase  font-bold text-xl" to="/">
-          Businesses
+    <nav className="dark:bg-gray-800 lg:px-[5em] px-[1em] lg:py-10 dark:text-white text-black bg-pink-300 flex justify-between items-center h-16">
+      <div className="flex gap-5 items-center">
+        <Link
+          className="dark:text-white flex text-gray-800 items-center gap-5 text-[2em] font-bold"
+          to="/"
+        >
+          REview <GrOverview />
+        </Link>
+        <Link
+          to="/businesses"
+          className="hidden lg:inline-block lg:text-[1.5em] lg:rounded-lg lg:px-4 lg:py-2 transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:bg-pink-500 hover:text-white dark:hover:bg-gray-700 dark:hover:text-white"
+        >
+          all businesses
         </Link>
       </div>
       <div className="flex items-center gap-2">
-        <ModeToggle />
         {loggedInUser ? (
           <div className="flex items-center gap-1">
             <DropdownMenu>
@@ -86,14 +95,24 @@ const Navbar = () => {
               </svg>
             </button>
             <div className="hidden md:flex items-center gap-2">
-              <div className="flex gap-3">
-                <Link to="/businesses">Businesses</Link>
-                <Link to="/login">Login</Link>
-                <Link to="/register">Register</Link>
+              <div className="flex gap-5 text-[1.5em]">
+                <Link
+                  to="/login"
+                  className="lg:text-[1.3em] lg:rounded-lg lg:px-4 lg:py-2 transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:bg-pink-500 hover:text-white dark:hover:bg-gray-700 dark:hover:text-white"
+                >
+                  login
+                </Link>
+                <Link
+                  to="/register"
+                  className="lg:text-[1.3em] lg:rounded-lg lg:px-4 lg:py-2 transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:bg-pink-500 hover:text-white dark:hover:bg-gray-700 dark:hover:text-white"
+                >
+                  register
+                </Link>
               </div>
             </div>
           </>
         )}
+        <ModeToggle />
       </div>
       {desktopMenuOpen && (
         <div className="md:hidden absolute top-14 left-0 right-0 bg-white/95 dark:bg-gray-800/95 p-4 shadow-md z-10">
