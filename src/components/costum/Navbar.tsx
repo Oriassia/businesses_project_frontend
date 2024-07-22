@@ -24,9 +24,9 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-gray-800 p-4 flex justify-between items-center h-14">
+    <nav className="bg-gray-800 lg:px-[5em] px-[1em]  flex justify-between items-center h-14">
       <div>
-        <Link className="text-primary uppercase font-bold text-xl" to="/">
+        <Link className="dark:text-white uppercase  font-bold text-xl" to="/">
           Businesses
         </Link>
       </div>
