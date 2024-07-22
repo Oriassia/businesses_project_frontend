@@ -50,8 +50,6 @@ const LoginPage: React.FC = () => {
               type="text"
               id="username"
               name="username"
-              // value={username}
-              // onChange={(e) => setUsername(e.target.value)}
               className="w-full p-2 border border-gray-300 rounded"
               required
             />
@@ -64,8 +62,6 @@ const LoginPage: React.FC = () => {
               type="password"
               id="password"
               name="password"
-              // value={password}
-              // onChange={(e) => setPassword(e.target.value)}
               className="w-full p-2 border border-gray-300 rounded"
               required
             />
