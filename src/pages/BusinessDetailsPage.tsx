@@ -63,7 +63,7 @@ const BusinessDetailsPage: React.FC = () => {
             {renderStars(business.rating)}
           </div>
           <p className="text-black ml-2 font-bold">{business.rating}</p>
-          <p className="pl-1 text-gray-500 tracking-wider font-semibold">{`/ ${business.summOfReviews} reviews`}</p>
+          <p className="pl-1 text-gray-500 tracking-wider font-semibold">{`/ ${business.reviews.length} reviews`}</p>
         </div>
         <div className="flex items-center gap-9 lg:flex-none">
           <p className="text-[1.1em] flex flex-row items-center pb-3 gap-1 text-gray-500 font-normal">
@@ -190,7 +190,7 @@ const BusinessDetailsPage: React.FC = () => {
                 </div>
                 <p className="text-gray-700 ml-2 font-bold">{review.rating}</p>
               </div>
-              <p className="text-gray-600 mb-2">{review.user}</p>
+              <p className="text-gray-600 mb-2">{review.user.username}</p>
               <p className="text-gray-600 mb-2">{review.content}</p>
               <div className="flex items-center">
                 <FaThumbsUp className="text-gray-500" />
