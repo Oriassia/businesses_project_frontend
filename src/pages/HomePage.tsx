@@ -1,8 +1,17 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { FaStar, FaSearch, FaCoffee, FaPizzaSlice } from "react-icons/fa";
+import {
+  FaStar,
+  FaSearch,
+  FaCoffee,
+  FaPizzaSlice,
+  FaGlassCheers,
+  FaShoppingCart,
+} from "react-icons/fa";
 import { AiFillHeart } from "react-icons/ai";
 import { motion } from "framer-motion";
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 const HomePage: React.FC = () => {
   return (
@@ -36,7 +45,7 @@ const HomePage: React.FC = () => {
           </Link>
         </header>
 
-        <section className="py-20">
+        <section className="lg:py-20 px-10  bg-white">
           <div className="text-center mb-12">
             <motion.h2
               className="text-4xl font-bold text-gray-800"
@@ -68,18 +77,18 @@ const HomePage: React.FC = () => {
             />
             <CategoryCard
               title="Bars"
-              icon={<AiFillHeart size={48} className="text-pink-600" />}
+              icon={<FaGlassCheers size={48} className="text-pink-600" />}
               image="https://images.pexels.com/photos/34577/pexels-photo.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
             />
             <CategoryCard
               title="Shops"
-              icon={<FaStar size={48} className="text-pink-600" />}
+              icon={<FaShoppingCart size={48} className="text-pink-600" />}
               image="https://images.pexels.com/photos/3965548/pexels-photo-3965548.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
             />
           </div>
         </section>
 
-        <section className="py-20 bg-white">
+        <section className="py-20 bg-gradient-to-r from-pink-50 to-red-50">
           <div className="text-center mb-12">
             <motion.h2
               className="text-4xl font-bold text-gray-800"
@@ -117,6 +126,117 @@ const HomePage: React.FC = () => {
               description="Explore new places based on reviews from others."
               icon={<AiFillHeart size={48} className="text-pink-600" />}
             />
+          </div>
+        </section>
+
+        <section className="py-20 bg-white">
+          <div className="text-center mb-12">
+            <motion.h2
+              className="text-4xl font-bold text-gray-800"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1 }}
+            >
+              Featured Reviews
+            </motion.h2>
+            <motion.p
+              className="text-lg text-gray-600"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1.5 }}
+            >
+              Read reviews from our community
+            </motion.p>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <ReviewCard
+              username="Jane Doe"
+              rating={5}
+              review="Amazing place! The atmosphere was fantastic and the food was delicious."
+              image="https://images.pexels.com/photos/3184405/pexels-photo-3184405.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+            />
+            <ReviewCard
+              username="John Smith"
+              rating={4}
+              review="Great service and cozy environment. Would definitely recommend."
+              image="https://images.pexels.com/photos/1231234/pexels-photo-1231234.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+            />
+            <ReviewCard
+              username="Emily Brown"
+              rating={5}
+              review="A perfect place for a weekend getaway. Loved every moment here."
+              image="https://images.pexels.com/photos/4564564/pexels-photo-4564564.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+            />
+          </div>
+        </section>
+
+        <section className="py-20 bg-gradient-to-r from-purple-50 via-pink-50 to-red-50">
+          <div className="text-center mb-12">
+            <motion.h2
+              className="text-4xl font-bold text-gray-800"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1 }}
+            >
+              What Our Users Say
+            </motion.h2>
+            <motion.p
+              className="text-lg text-gray-600"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1.5 }}
+            >
+              Hear from our vibrant community of reviewers
+            </motion.p>
+          </div>
+          <div className="max-w-4xl mx-auto">
+            <Carousel
+              showArrows={true}
+              showThumbs={false}
+              infiniteLoop={true}
+              autoPlay={true}
+              interval={5000}
+            >
+              <div>
+                <img
+                  src="https://images.pexels.com/photos/3184405/pexels-photo-3184405.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                  alt="Review 1"
+                />
+                <div className="legend">
+                  <h3 className="text-2xl font-bold">Jane Doe</h3>
+                  <p>
+                    Amazing place! The atmosphere was fantastic and the food was
+                    delicious.
+                  </p>
+                </div>
+              </div>
+              <div>
+                <img
+                  src="https://images.pexels.com/photos/1231234/pexels-photo-1231234.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                  alt="Review 2"
+                />
+                <div className="legend">
+                  <h3 className="text-2xl font-bold">John Smith</h3>
+                  <p>
+                    Great service and cozy environment. Would definitely
+                    recommend.
+                  </p>
+                </div>
+              </div>
+              <div>
+                <img
+                  src="https://images.pexels.com/photos/4564564/pexels-photo-4564564.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                  alt="Review 3"
+                />
+                <div className="legend">
+                  <h3 className="text-2xl font-bold">Emily Brown</h3>
+                  <p>
+                    A perfect place for a weekend getaway. Loved every moment
+                    here.
+                  </p>
+                </div>
+              </div>
+            </Carousel>
           </div>
         </section>
       </div>
@@ -164,7 +284,7 @@ const HowItWorksCard: React.FC<HowItWorksCardProps> = ({
 }) => {
   return (
     <motion.div
-      className="bg-white border border-gray-200 rounded-lg shadow-lg p-6"
+      className="relative bg-gradient-to-r from-pink-50 to-red-50 border border-gray-200 rounded-lg shadow-lg p-6 transform transition-transform hover:scale-105 hover:shadow-xl"
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
@@ -174,6 +294,51 @@ const HowItWorksCard: React.FC<HowItWorksCardProps> = ({
         Step {step}: {title}
       </h4>
       <p className="text-gray-600">{description}</p>
+      <div className="absolute inset-0 bg-black bg-opacity-20 opacity-0 transition-opacity duration-300 hover:opacity-100 flex items-center justify-center">
+        <p className="text-white text-lg font-semibold">Learn More</p>
+      </div>
+    </motion.div>
+  );
+};
+
+interface ReviewCardProps {
+  username: string;
+  rating: number;
+  review: string;
+  image: string;
+}
+
+const ReviewCard: React.FC<ReviewCardProps> = ({
+  username,
+  rating,
+  review,
+  image,
+}) => {
+  return (
+    <motion.div
+      className="bg-white border border-gray-200 rounded-lg shadow-lg p-6 transition-transform transform hover:scale-105 hover:shadow-xl"
+      initial={{ opacity: 0, y: 50 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      <div className="flex items-center mb-4">
+        <img
+          src={image}
+          alt={username}
+          className="w-12 h-12 rounded-full object-cover mr-4"
+        />
+        <div>
+          <h4 className="text-lg font-bold text-gray-800">{username}</h4>
+          <div className="flex items-center">
+            {Array(rating)
+              .fill(0)
+              .map((_, i) => (
+                <FaStar key={i} className="text-yellow-500" />
+              ))}
+          </div>
+        </div>
+      </div>
+      <p className="text-gray-600">{review}</p>
     </motion.div>
   );
 };
