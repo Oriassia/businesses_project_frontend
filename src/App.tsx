@@ -4,6 +4,7 @@ import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import Navbar from "./components/Navbar";
 import BusinessDetailsPage from "./pages/BusinessDetailsPage";
+import Footer from "./components/Footer";
 function App() {
   return (
     <>
@@ -14,6 +15,7 @@ function App() {
         <Route path="/businesses" element={<BusinessesPage />} />
         <Route path="/business/:id" element={<BusinessDetailsPage />} />
       </Routes>
+      <Footer />
     </>
   );
 }
