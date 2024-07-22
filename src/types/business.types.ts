@@ -1,21 +1,43 @@
-// business.types.ts
+import { GET_BUSINESSES } from "store/actionTypes";
 
-export interface Business {
+interface IContactInfo {
+  address: string;
+  phoneNumber: string;
+  websiteLink: string;
+  openAt: string;
+  closeAt: string;
+}
+
+export interface IReview {
+  _id: string;
+  user: string;
+  content: string;
+  business: string;
+  likes: number;
+  rating: number;
+  createdAt?: string;
+}
+
+export interface IBusiness {
   _id: string;
   name: string;
   image: string;
   description: string;
   category: string;
-  contactInfo: ContactInfo;
+  contactInfo: IContactInfo;
   rating: number;
-  reviews: string[];
+  reviews: IReview[];
+  createdAt?: string;
   summOfReviews: number;
 }
 
-export interface ContactInfo {
-  openAt: string;
-  closeAt: string;
-  address: string;
-  phoneNumber: string;
-  websiteLink: string;
+export interface BusinessesInitialStateType {
+  businesses: IBusiness[] | null;
 }
+
+export interface GetBusinessesAction {
+  type: typeof GET_BUSINESSES;
+  payload: IBusiness[];
+}
+
+export type BusinessActionTypes = GetBusinessesAction;

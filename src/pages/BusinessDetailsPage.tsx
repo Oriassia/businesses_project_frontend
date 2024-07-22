@@ -1,20 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { renderStars } from "../utils/renderStars";
-import { Business } from "../types/business.types";
 import { IoTimeOutline } from "react-icons/io5";
 import { FaShareAlt, FaThumbsUp } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import Modal from "@/components/ui/modal";
 import api from "@/services/api.service";
-import { Review } from "@/types/review.types";
+import { IBusiness, IReview } from "@/types/business.types";
 
 const BusinessDetailsPage: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const { id } = useParams<{ id: string }>();
-  const [business, setBusiness] = useState<Business | undefined>(undefined);
-  const [reviews, setReviews] = useState<Review[]>([]);
+  const [business, setBusiness] = useState<IBusiness | undefined>(undefined);
+  const [reviews, setReviews] = useState<IReview[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 

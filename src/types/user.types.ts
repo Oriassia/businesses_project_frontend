@@ -1,5 +1,7 @@
+import { LOGOUT_USER, SET_LOGGEDIN_USER } from "store/actionTypes";
+
 // Define UserType
-export interface UserType {
+export interface IUser {
   userId: string;
   username: string;
   firstName: string;
@@ -8,25 +10,22 @@ export interface UserType {
   createdAt?: string; // Optional property
 }
 
-// Define the state type
-export type LoggedInUserStateType = UserType | null | undefined;
-
-// Import action types
-
-// Define initial state type
-export interface InitialStateType {
-  loggedInUser: LoggedInUserStateType;
+export interface ILoggedinUserState {
+  loggedInUser: IUser | null;
 }
 
-// Initial state
-export const INITIAL_STATE: InitialStateType = {
-  loggedInUser: null,
-};
-
-// Define action interfaces
-export interface actionType {
-  type: string;
-  payload: UserType;
+export interface SetLoggedinUserAction {
+  type: typeof SET_LOGGEDIN_USER;
+  payload: IUser;
 }
 
-export type UserActionTypes = Partial<actionType>;
+export interface LogoutUserAction {
+  type: typeof LOGOUT_USER;
+}
+
+export type UserActionTypes = SetLoggedinUserAction | LogoutUserAction;
+
+export interface IUserLoginData {
+  username: FormDataEntryValue | null;
+  password: FormDataEntryValue | null;
+}
