@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { renderStars } from "../utils/renderStars";
-import { IoTimeOutline } from "react-icons/io5";
-import { FaShareAlt, FaThumbsUp } from "react-icons/fa";
-import { Button } from "@/components/ui/button";
-import Modal from "@/components/ui/modal";
 import api from "@/services/api.service";
 import { IBusiness, IReview } from "@/types/business.types";
+import DetailsPageHeader from "@/components/costum/businessDetailsComp/DetailsPageHeader";
+import Modal from "@/components/ui/modal";
+import { Button } from "@/components/ui/button";
+import DetailsPageInfo from "@/components/costum/businessDetailsComp/DetailsPageInfo";
+import DetailsPageReviews from "@/components/costum/businessDetailsComp/DetailsPageReviews";
 
 const BusinessDetailsPage: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
@@ -54,27 +54,9 @@ const BusinessDetailsPage: React.FC = () => {
 
   return (
     <div className="lg:px-[5em] px-[1em]">
-      <h1 className="text-3xl font-bold py-4">
-        {business.name} {`on ${business.contactInfo.address}`}
-      </h1>
-      <div className="lg:flex lg:gap-10 py-3 items-center">
-        <div className="text-[1.1em] flex pb-3 items-center">
-          <div className="flex items-center">
-            {renderStars(business.rating)}
-          </div>
-          <p className="text-black ml-2 font-bold">{business.rating}</p>
-          <p className="pl-1 text-gray-500 tracking-wider font-semibold">{`/ ${business.reviews.length} reviews`}</p>
-        </div>
-        <div className="flex items-center gap-9 lg:flex-none">
-          <p className="text-[1.1em] flex flex-row items-center pb-3 gap-1 text-gray-500 font-normal">
-            <IoTimeOutline className="text-gray-500 font-semibold" />
-            Closes at {business.contactInfo.closeAt}
-          </p>
-          <div className="flex items-center pb-3">
-            <FaShareAlt />
-          </div>
-        </div>
-      </div>
+      {/* HEADER */}
+      <DetailsPageHeader business={business} />
+
       <div className="flex lg:gap-10 gap-2">
         <Button
           className="mb-4 font-medium bg-cyan-800 hover:bg-cyan-900"
@@ -99,25 +81,19 @@ const BusinessDetailsPage: React.FC = () => {
             <div className="flex space-x-4">
               <Button
                 className="bg-green-500 hover:bg-green-600"
-                onClick={() => {
-                  handleCloseModal();
-                }}
+                onClick={handleCloseModal}
               >
                 Yes, they answered
               </Button>
               <Button
                 className="bg-yellow-500 hover:bg-yellow-600"
-                onClick={() => {
-                  handleCloseModal();
-                }}
+                onClick={handleCloseModal}
               >
                 Wrong number
               </Button>
               <Button
                 className="bg-red-500 hover:bg-red-600"
-                onClick={() => {
-                  handleCloseModal();
-                }}
+                onClick={handleCloseModal}
               >
                 No answer
               </Button>
@@ -129,79 +105,20 @@ const BusinessDetailsPage: React.FC = () => {
           </div>
         </Modal>
       )}
+      {/* IMG */}
       <img
         src={business.image}
         alt={business.name}
         className="w-[50em] h-64 object-cover rounded-lg mb-4"
       />
-      <div>
-        <h1>Info</h1>
-        <p className="font-medium my-2">Description:</p>
-        <div className="flex">
-          <p className="text-gray-700 mb-4 lg:w-[50em]">
-            {isExpanded
-              ? business.description
-              : `${business.description.substring(0, 300)}...  `}
-            <button
-              onClick={toggleDescription}
-              className="text-cyan-800 font-semibold underline mb-4 lg:pl-3 hover:underline"
-            >
-              {isExpanded ? "Close description" : "Show More"}
-            </button>
-          </p>
-        </div>
-        <p className="text-gray-600 mb-2">
-          <span className="font-medium text-black">Category:</span>{" "}
-          {business.category}
-        </p>
-        <div className="mb-4">
-          <h3 className="font-semibold mb-1">Contact Info</h3>
-          <p className="text-gray-600 mb-1">
-            Address: {business.contactInfo.address}
-          </p>
-          <p className="text-gray-600 mb-1">
-            Phone: {business.contactInfo.phoneNumber}
-          </p>
-          <p className="text-gray-600 mb-1">
-            Open: {business.contactInfo.openAt} - {business.contactInfo.closeAt}
-          </p>
-          <p className="text-gray-600 mb-2">
-            Website:{" "}
-            <a
-              href={business.contactInfo.websiteLink}
-              className="text-blue-500 hover:underline"
-            >
-              {business.contactInfo.websiteLink}
-            </a>
-          </p>
-        </div>
-      </div>
-      <div>
-        <h2 className="text-2xl font-bold mb-4">Reviews</h2>
-        {reviews.length > 0 ? (
-          reviews.map((review) => (
-            <div
-              key={review._id}
-              className="mb-4 p-4 bg-white border border-gray-200 rounded-lg shadow-lg"
-            >
-              <div className="flex items-center mb-2">
-                <div className="flex text-yellow-500">
-                  {renderStars(review.rating)}
-                </div>
-                <p className="text-gray-700 ml-2 font-bold">{review.rating}</p>
-              </div>
-              <p className="text-gray-600 mb-2">{review.user.username}</p>
-              <p className="text-gray-600 mb-2">{review.content}</p>
-              <div className="flex items-center">
-                <FaThumbsUp className="text-gray-500" />
-                <p className="text-gray-600 ml-2">{review.likes} likes</p>
-              </div>
-            </div>
-          ))
-        ) : (
-          <p className="text-gray-600">No reviews yet.</p>
-        )}
-      </div>
+      {/* INFO */}
+      <DetailsPageInfo
+        business={business}
+        isExpanded={isExpanded}
+        toggleDescription={toggleDescription}
+      />
+      {/* REVIEWS */}
+      <DetailsPageReviews reviews={reviews} />
     </div>
   );
 };
