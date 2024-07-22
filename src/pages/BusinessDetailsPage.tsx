@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import api from "@/services/api.service";
 import { IBusiness } from "@/types/business.types";
@@ -10,7 +10,7 @@ import DetailsPageReviews from "@/components/costum/businessDetailsComp/DetailsP
 import { useAppDispatch } from "../../store/storeIndex";
 import { setReviews } from "../../store/actions/review.actions";
 
-const BusinessDetailsPage: React.FC = () => {
+const BusinessDetailsPage = () => {
   const [showModal, setShowModal] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const { id } = useParams<{ id: string }>();
@@ -55,7 +55,7 @@ const BusinessDetailsPage: React.FC = () => {
   }
 
   return (
-    <div className="lg:px-[5em] px-[1em]">
+    <div className="lg:px-[5em] px-[1em] ">
       {/* HEADER */}
       <DetailsPageHeader business={business} />
 
@@ -65,9 +65,6 @@ const BusinessDetailsPage: React.FC = () => {
           onClick={handleOpenModal}
         >
           {business.contactInfo.phoneNumber}... — show
-        </Button>
-        <Button className="bg-slate-600 hover:bg-slate-700">
-          Add a review
         </Button>
       </div>
       {showModal && (
@@ -120,7 +117,7 @@ const BusinessDetailsPage: React.FC = () => {
         toggleDescription={toggleDescription}
       />
       {/* REVIEWS */}
-      <DetailsPageReviews />
+      <DetailsPageReviews business={business} />
     </div>
   );
 };
