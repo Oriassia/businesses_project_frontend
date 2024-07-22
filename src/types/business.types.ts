@@ -9,7 +9,7 @@ interface IContactInfo {
 }
 interface IUserReview {
   id: string;
-  name: string;
+  username: string;
 }
 
 export interface IReview {
