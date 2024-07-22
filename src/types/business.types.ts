@@ -7,6 +7,7 @@ interface IContactInfo {
   openAt: string;
   closeAt: string;
 }
+
 interface IUserReview {
   _id: string;
   username: string;
