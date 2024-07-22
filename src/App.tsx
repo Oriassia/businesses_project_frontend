@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import BusinessListPage from "./pages/BusinessListPage";
+import BusinessesPage from "./pages/BusinessesPage";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import Navbar from "./components/Navbar";
@@ -11,7 +11,7 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="login" element={<LoginPage />} />
-        <Route path="/businesses" element={<BusinessListPage />} />
+        <Route path="/businesses" element={<BusinessesPage />} />
         <Route path="/business/:id" element={<BusinessDetailsPage />} />
       </Routes>
     </>
