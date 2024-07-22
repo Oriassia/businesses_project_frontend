@@ -8,7 +8,7 @@ interface IContactInfo {
   closeAt: string;
 }
 interface IUserReview {
-  id: string;
+  _id: string;
   username: string;
 }
 
