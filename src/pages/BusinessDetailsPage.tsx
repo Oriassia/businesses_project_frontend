@@ -1,28 +1,30 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import api from "@/services/api.service";
-import { IBusiness, IReview } from "@/types/business.types";
+import { IBusiness } from "@/types/business.types";
 import DetailsPageHeader from "@/components/costum/businessDetailsComp/DetailsPageHeader";
 import Modal from "@/components/ui/modal";
 import { Button } from "@/components/ui/button";
 import DetailsPageInfo from "@/components/costum/businessDetailsComp/DetailsPageInfo";
 import DetailsPageReviews from "@/components/costum/businessDetailsComp/DetailsPageReviews";
+import { useAppDispatch } from "../../store/storeIndex";
+import { setReviews } from "../../store/actions/review.actions";
 
 const BusinessDetailsPage: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const { id } = useParams<{ id: string }>();
   const [business, setBusiness] = useState<IBusiness | undefined>(undefined);
-  const [reviews, setReviews] = useState<IReview[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const fetchBusinessAndReviews = async () => {
       try {
         const response = await api.get(`/businesses/${id}`);
         setBusiness(response.data);
-        setReviews(response.data.reviews);
+        dispatch(setReviews(response.data.reviews));
         setLoading(false);
       } catch (err) {
         setError("Failed to fetch business details and reviews");
@@ -118,7 +120,7 @@ const BusinessDetailsPage: React.FC = () => {
         toggleDescription={toggleDescription}
       />
       {/* REVIEWS */}
-      <DetailsPageReviews reviews={reviews} />
+      <DetailsPageReviews />
     </div>
   );
 };
