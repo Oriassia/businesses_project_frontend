@@ -46,10 +46,9 @@ export function ThemeProvider({
         : "light";
 
       root.classList.add(systemTheme);
-      return;
+    } else {
+      root.classList.add(theme);
     }
-
-    root.classList.add(theme);
   }, [theme]);
 
   const value: ThemeContextType = {
@@ -76,3 +75,18 @@ export const useTheme = (): ThemeContextType => {
 
   return context;
 };
+
+// Example component to toggle themes
+export function ThemeToggle() {
+  const { theme, setTheme } = useTheme();
+
+  const toggleTheme = () => {
+    setTheme(theme === "dark" ? "light" : "dark");
+  };
+
+  return (
+    <button onClick={toggleTheme}>
+      {theme === "dark" ? "Switch to Light Mode" : "Switch to Dark Mode"}
+    </button>
+  );
+}

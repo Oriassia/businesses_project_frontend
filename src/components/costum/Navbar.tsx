@@ -7,7 +7,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
@@ -24,7 +23,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-gray-800 lg:px-[5em] px-[1em]  flex justify-between items-center h-14">
+    <nav className="dark:bg-gray-800 lg:px-[5em] px-[1em] dark:text-white text-black bg-pink-300 flex justify-between items-center h-14">
       <div>
         <Link className="dark:text-white uppercase  font-bold text-xl" to="/">
           Businesses
@@ -44,9 +43,14 @@ const Navbar = () => {
                 </Avatar>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
-                <DropdownMenuLabel>
+                <DropdownMenuItem>
                   <Link to="/my-profile">My profile</Link>
-                </DropdownMenuLabel>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <Link to="/businesses" className="text-white">
+                    Businesses
+                  </Link>
+                </DropdownMenuItem>
                 <DropdownMenuItem>Settings</DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={() => dispatch(logout())}>
@@ -83,6 +87,7 @@ const Navbar = () => {
             </button>
             <div className="hidden md:flex items-center gap-2">
               <div className="flex gap-3">
+                <Link to="/businesses">Businesses</Link>
                 <Link to="/login">Login</Link>
                 <Link to="/register">Register</Link>
               </div>
@@ -96,6 +101,11 @@ const Navbar = () => {
             <ul className="flex flex-col gap-4">
               {!loggedInUser && (
                 <>
+                  <li>
+                    <Link to="/businesses" onClick={toggleMobileMenu}>
+                      Businesses
+                    </Link>
+                  </li>
                   <li>
                     <Link to="/login" onClick={toggleMobileMenu}>
                       Login
