@@ -1,18 +1,29 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaUser, FaLock, FaEnvelope, FaIdBadge } from "react-icons/fa";
 import api from "../services/api.service";
 import rimonim from "../imgs/rimons.mp4";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/storeIndex";
+import { useToast } from "@/components/ui/use-toast";
+
+interface FormData {
+  username: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  likes: string[];
+}
 
 const RegisterPage: React.FC = () => {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     username: "",
     password: "",
     firstName: "",
     lastName: "",
     email: "",
+    likes: [],
   });
 
   const navigate = useNavigate();
@@ -20,27 +31,28 @@ const RegisterPage: React.FC = () => {
   const [success, setSuccess] = useState<string | null>(null);
   const [customError, setCustomError] = useState<string | null>(null);
   const { loggedInUser } = useSelector((state: RootState) => state.userModule);
+  const { toast } = useToast();
 
   useEffect(() => {
     if (loggedInUser !== null) {
       navigate("/");
     }
-  }, []);
+  }, [loggedInUser, navigate]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
   };
 
-  const validatePassword = (password: string) => {
+  const validatePassword = (password: string): boolean => {
     const regex =
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     return regex.test(password);
   };
 
-  const handleRegister = async (e: React.FormEvent) => {
+  const handleRegister = async (e: FormEvent) => {
     e.preventDefault();
     if (!validatePassword(formData.password)) {
       setCustomError(
@@ -50,17 +62,25 @@ const RegisterPage: React.FC = () => {
     }
     setCustomError(null);
     try {
-      const response = await api.post("/register", formData);
-      if (response.status === 201) {
-        setSuccess("Registration successful! Please log in.");
-        setError(null);
-        // Optionally, redirect to login page or clear the form
+      const response = await api.post("/auth/register", formData);
+      if (response) {
+        toast({
+          title: "Registration successful",
+          description: "Please log in to continue.",
+          className: "bg-pink-300 text-black border-none",
+        });
+      } else {
+        setCustomError("Failed to register. Please try again.");
+        return;
+      }
+      setSuccess("Register successfully. Please log in.");
+      navigate("/login");
+    } catch (err: any) {
+      if (err.response && err.response.data && err.response.data.error) {
+        setError(err.response.data.error);
       } else {
         setError("Registration failed. Please try again.");
-        setSuccess(null);
       }
-    } catch (err) {
-      setError("Registration failed. Please try again.");
       setSuccess(null);
     }
   };
@@ -91,7 +111,7 @@ const RegisterPage: React.FC = () => {
               id="username"
               name="username"
               placeholder="Username"
-              className="w-full p-2 text-gray-700 dark:bg-gray-800 focus:outline-none"
+              className="w-full p-2 text-gray-700 dark:text-white dark:bg-gray-800 focus:outline-none"
               required
               value={formData.username}
               onChange={handleChange}
@@ -110,7 +130,7 @@ const RegisterPage: React.FC = () => {
               id="password"
               name="password"
               placeholder="Password"
-              className="w-full p-2 text-gray-700 dark:bg-gray-800 focus:outline-none"
+              className="w-full p-2 text-gray-700 dark:text-white dark:bg-gray-800 focus:outline-none"
               required
               value={formData.password}
               onChange={handleChange}
@@ -123,7 +143,7 @@ const RegisterPage: React.FC = () => {
               id="firstName"
               name="firstName"
               placeholder="First Name"
-              className="w-full p-2 text-gray-700 dark:bg-gray-800 focus:outline-none"
+              className="w-full p-2 text-gray-700 dark:text-white dark:bg-gray-800 focus:outline-none"
               required
               value={formData.firstName}
               onChange={handleChange}
@@ -136,7 +156,7 @@ const RegisterPage: React.FC = () => {
               id="lastName"
               name="lastName"
               placeholder="Last Name"
-              className="w-full p-2 text-gray-700 dark:bg-gray-800 focus:outline-none"
+              className="w-full p-2 text-gray-700 dark:text-white dark:bg-gray-800 focus:outline-none"
               required
               value={formData.lastName}
               onChange={handleChange}
@@ -149,7 +169,7 @@ const RegisterPage: React.FC = () => {
               id="email"
               name="email"
               placeholder="Email"
-              className="w-full p-2 text-gray-700 dark:bg-gray-800 focus:outline-none"
+              className="w-full p-2 text-gray-700 dark:text-white dark:bg-gray-800 focus:outline-none"
               required
               value={formData.email}
               onChange={handleChange}

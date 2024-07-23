@@ -32,7 +32,8 @@ function DetailsPageInfo({
         </p>
       </div>
       <p className="text-gray-600 mb-4">
-        <span className="font-medium text-lg text-black">Category:</span>{" "}
+        <span className="font-medium  text-lg text-black ">Category: </span>{" "}
+        <br />
         {business.category}
       </p>
       <div className="mb-4">

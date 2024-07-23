@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { FaThumbsUp } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../../../../store/storeIndex";
@@ -20,7 +21,6 @@ import {
   updateUserLike,
 } from "../../../../store/actions/user.actions";
 
-
 interface ReviewPropsType {
   business: IBusiness;
 }
@@ -32,6 +32,7 @@ const DetailsPageReviews: React.FC<ReviewPropsType> = ({ business }) => {
   const [ratingValue, setRatingValue] = useState(0);
   const dispatch = useAppDispatch();
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
@@ -53,19 +54,25 @@ const DetailsPageReviews: React.FC<ReviewPropsType> = ({ business }) => {
   }
   const handleAddReviewClick = () => {
     if (!loggedInUser) {
-      console.log("click");
       toast({
         title: "Authentication Required",
         description: "You need to be logged in to write a review",
         variant: "destructive",
       });
+      navigate("/login");
     } else {
       setShowAddReviewModal(true);
     }
   };
 
   async function handleLike(reviewId: string, action: string) {
-    if (!loggedInUser) return;
+    if (!loggedInUser) {
+      toast({
+        title: "Authentication Required",
+        description: "You need to be logged in to like a review",
+        variant: "destructive",
+      });
+    }
     switch (action) {
       case "add":
         try {
@@ -137,7 +144,7 @@ const DetailsPageReviews: React.FC<ReviewPropsType> = ({ business }) => {
                 />
               ) : (
                 <FaThumbsUp
-                  className="cursor-pointer text-grey-700"
+                  className="cursor-pointer dark:text-gray-700 text-grey-700"
                   onClick={() => handleLike(review._id, "add")}
                 />
               )}
