@@ -29,7 +29,9 @@ const BusinessesPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [categories, setCategories] = useState<string[] | null>(null);
   const [maxPages, setMaxPages] = useState<number | null>(null);
-  const [ratingValue, setRatingValue] = useState(0);
+  const [ratingValue, setRatingValue] = useState<number>(
+    Number(searchParams.get("rating")) || 0
+  );
   const dispatch = useAppDispatch();
 
   const { businesses, businessesCount } = useSelector(
@@ -228,10 +230,11 @@ const BusinessesPage = () => {
             </div>
             <RatingInput
               onChange={(value: number) => {
+                setRatingValue(value);
                 searchParams.set("rating", `${value}`);
                 setSearchParams(searchParams);
-                setRatingValue(value);
               }}
+              value={ratingValue}
             />
           </div>
         </div>
