@@ -90,21 +90,24 @@ const HomePage: React.FC = () => {
                 </span>
               </div>
             </div>
-            <Link to="/businesses" className="flex justify-center items-center">
-              <motion.button
-                className="px-8 py-3 bg-pink-600 text-white rounded-full flex text-[1.3em] justify-center gap-3 items-center  shadow-lg hover:bg-pink-700 transition duration-300"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
+            <motion.button
+              className="px-8 py-3 bg-pink-600 text-white rounded-full flex text-[1.3em] mx-auto justify-center gap-3 items-center  shadow-lg hover:bg-pink-700 transition duration-300"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+            >
+              <Link
+                to="/businesses"
+                className="flex justify-center items-center"
               >
                 <p>Explore Now</p>{" "}
                 <p>
                   <TbHandClick />
                 </p>
-              </motion.button>
-            </Link>
+              </Link>
+            </motion.button>
           </header>
 
-          <section className="lg:py-20 py-10 px-10 rounded-md bg-white">
+          <section className="lg:py-20 py-10 px-10 rounded-md bg-pink-100 bg-opacity-55">
             <div className="text-center mb-12">
               <motion.h2
                 className="text-4xl font-bold text-gray-800"
@@ -148,10 +151,10 @@ const HomePage: React.FC = () => {
           </section>
         </div>
 
-        <section className="py-20 bg-gradient-to-r from-pink-50 to-red-50 lg:px-[5em] px-[1em]">
+        <section className="py-20 bg-gradient-to-r from-pink-50 to-red-50 dark:from-pink-800 dark:to-orange-950 lg:px-[5em] px-[1em]">
           <div className="text-center mb-12">
             <motion.h2
-              className="text-4xl font-bold text-gray-800"
+              className="text-4xl font-bold dark:text-pink-200 text-gray-800"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1 }}
@@ -159,7 +162,7 @@ const HomePage: React.FC = () => {
               How It Works
             </motion.h2>
             <motion.p
-              className="text-[1.3em] text-gray-600"
+              className="text-[1.3em] dark:text-rose-200 text-gray-600"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1.5 }}
@@ -171,7 +174,7 @@ const HomePage: React.FC = () => {
             {[1, 2, 3].map((step, index) => (
               <motion.div
                 key={index}
-                className="bg-white rounded-lg shadow-lg p-8 text-center  transition duration-300 hover:scale-105 hover:shadow-2xl"
+                className="bg-white rounded-lg shadow-lg p-8 text-center dark:bg-opacity-50 transition duration-300 hover:scale-105 hover:shadow-2xl"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.2, duration: 0.8 }}
@@ -185,7 +188,7 @@ const HomePage: React.FC = () => {
                     <h3 className="text-2xl font-bold text-gray-800 mb-2">
                       Search
                     </h3>
-                    <p className="text-gray-600 text-[1.1em]">
+                    <p className="text-gray-600 dark:text-black text-[1.1em]">
                       Find the best places based on your preferences.
                     </p>
                   </>
@@ -196,7 +199,7 @@ const HomePage: React.FC = () => {
                     <h3 className="text-2xl font-bold text-gray-800 mb-2">
                       Review
                     </h3>
-                    <p className="text-gray-600 text-[1.1em]">
+                    <p className="text-gray-600 dark:text-black text-[1.1em]">
                       Share your experiences with the community.
                     </p>
                   </>
@@ -210,7 +213,7 @@ const HomePage: React.FC = () => {
                     <h3 className="text-2xl font-bold text-gray-800 mb-2">
                       Discover
                     </h3>
-                    <p className="text-gray-600 text-[1.1em]">
+                    <p className="text-gray-600 dark:text-black text-[1.1em]">
                       Explore new places based on reviews from others.
                     </p>
                   </>
@@ -220,10 +223,10 @@ const HomePage: React.FC = () => {
           </div>
         </section>
 
-        <section className="py-20 lg:px-[5em] px-[1em] bg-gradient-to-t">
+        <section className="py-20 lg:px-[5em] px-[1em] dark:bg-gradient-to-r  dark:from-pink-800 dark:to-orange-950  bg-gradient-to-t">
           <div className="text-center mb-12">
             <motion.h2
-              className="text-4xl font-bold lg:py-2 text-gray-800"
+              className="text-4xl font-bold lg:py-2 dark:text-pink-200 text-gray-800"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1 }}
@@ -231,7 +234,7 @@ const HomePage: React.FC = () => {
               Top Features
             </motion.h2>
             <motion.p
-              className=" text-gray-600 text-[1.3em]"
+              className=" text-gray-600 dark:text-rose-200 text-[1.3em]"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1.5 }}
@@ -279,10 +282,10 @@ const HomePage: React.FC = () => {
           </div>
         </section>
 
-        <section className="py-20 bg-gradient-to-r px-[1em] from-purple-100 via-pink-100 to-red-100">
+        <section className="py-20 bg-gradient-to-r dark:bg-gradient-to-r  dark:from-pink-800 dark:to-orange-950 px-[1em] from-purple-100 via-pink-100 to-red-100">
           <div className="text-center mb-12">
             <motion.h2
-              className="text-4xl font-bold text-gray-800 lg:py-2"
+              className="text-4xl font-bold dark:text-pink-200 text-gray-800 lg:py-2"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1 }}
@@ -290,7 +293,7 @@ const HomePage: React.FC = () => {
               What Our Users Say
             </motion.h2>
             <motion.p
-              className="text-[1.3em] text-gray-600"
+              className="text-[1.3em] dark:text-rose-200 text-gray-600"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1.5 }}
@@ -356,7 +359,7 @@ interface CategoryCardProps {
 const CategoryCard: React.FC<CategoryCardProps> = ({ title, icon, image }) => {
   return (
     <motion.div
-      className="relative bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105 hover:shadow-xl"
+      className=" relative bg-white rounded-lg shadow-lg overflow-hidden transition-transform transform hover:shadow-xl"
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
@@ -387,7 +390,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
 }) => {
   return (
     <motion.div
-      className="relative bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden  transition duration-300 hover:scale-105 hover:shadow-2xl"
+      className="relative  rounded-lg shadow-lg overflow-hidden  transition duration-300 hover:scale-105 hover:shadow-2xl"
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}

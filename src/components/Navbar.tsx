@@ -24,10 +24,10 @@ const Navbar = () => {
   };
 
   return (
-    <nav className=" dark:bg-gray-800 lg:px-[5em] px-[1em] lg:py-10 dark:text-white text-black bg-pink-300 flex justify-between items-center h-16">
+    <nav className=" dark:bg-gray-800 lg:px-[5em] px-[1em] lg:py-10 dark:text-pink-500 text-black bg-pink-300 flex justify-between items-center h-16">
       <div className="flex gap-5 items-center">
         <Link
-          className="dark:text-white flex text-gray-800 items-center gap-5 text-[2em] font-bold"
+          className="dark:text-pink-500 flex text-gray-800 items-center gap-5 text-[2em] font-bold"
           to="/"
         >
           REview <GrOverview className=" animate-bounce" />

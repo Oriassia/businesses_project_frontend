@@ -1,9 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { renderStars } from "../utils/renderStars";
-import { GrUserExpert } from "react-icons/gr";
-import { AiOutlineThunderbolt } from "react-icons/ai";
-import { MdOutlineCategory } from "react-icons/md";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -63,7 +60,7 @@ const BusinessesPage = () => {
   }
 
   return (
-    <div className="bg-gradient-to-r from-purple-50 via-pink-50 to-red-50 min-h-screen py-8">
+    <div className="bg-gradient-to-r from-purple-50 via-pink-50 to-red-50 dark:from-pink-900 dark:via-orange-900 dark:to-red-900  min-h-screen py-8">
       <div className=" lg:px-[5em] px-[1em]  py-[1em] mb-[2em]">
         <div className="relative py-20 mb-10 rounded-lg bg-gradient-to-r from-orange-300 via-red-300 to-yellow-300">
           <div className="absolute inset-0 rounded-lg bg-opacity-50 bg-black z-0"></div>
@@ -90,7 +87,7 @@ const BusinessesPage = () => {
             {uniqueCategories?.map((category) => (
               <button
                 key={category}
-                className="flex items-center gap-2 bg-gradient-to-r from-pink-400 to-red-400 text-white py-3 px-8 rounded-full shadow-md hover:from-pink-500 hover:to-purple-500 transition-all duration-300 transform hover:scale-105 hover:shadow-2xl"
+                className="flex items-center gap-2 bg-gradient-to-r dark:from-pink-600 dark:to-red-600 from-pink-300 to-red-300 dark:text-white text-black font-medium py-3 px-8 rounded-lg shadow-md hover:from-pink-500 hover:to-purple-500 transition-all duration-300 transform hover:scale-105 hover:shadow-2xl"
               >
                 {category}
                 <span className="ml-2 transition-all duration-300 group-hover:ml-4">
@@ -126,7 +123,7 @@ const BusinessesPage = () => {
             {businesses?.map((business, index) => (
               <div
                 key={business._id}
-                className=" bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105 hover:shadow-xl"
+                className=" bg-white rounded-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105 hover:shadow-xl"
               >
                 <img
                   src={business.image}
