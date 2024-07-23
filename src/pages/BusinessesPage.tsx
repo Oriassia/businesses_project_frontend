@@ -209,6 +209,7 @@ const BusinessesPage = () => {
           <div className="flex flex-row gap-8 items-center">
             <div className=" w-full bg-white items-center rounded-lg shadow-lg">
               <DropdownMenu>
+
                 <DropdownMenuTrigger className="relative text-[1.3em] flex items-center px-4 py-3 bg-gradient-to-r from-pink-500 to-pink-700 text-white rounded-lg shadow-lg transition-transform transform hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-pink-300">
                   <span className="pr-1">Category </span> <IoMdColorFilter />
                 </DropdownMenuTrigger>
@@ -221,8 +222,8 @@ const BusinessesPage = () => {
                           key={category}
                           className={
                             activeCategories?.includes(category)
-                              ? "flex items-center gap-2 py-2 px-4 hover:bg-pink-100 bg-pink-600"
-                              : "flex items-center gap-2 py-2 px-4 hover:bg-pink-100"
+                              ? "flex items-center gap-2 py-2 px-4 hover:bg-pink-100 bg-pink-400"
+                              : "flex items-center gap-2 py-2 px-4 hover:bg-pink-200"
                           }
                           onClick={handleCategoryChange}
                         >

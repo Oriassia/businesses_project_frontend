@@ -40,7 +40,7 @@ const Navbar = () => {
       <div className="flex items-center gap-2">
         <Link
           to="/businesses"
-          className="hidden lg:inline-block md:inline-block lg:text-[2em] md:pr-4 md:text-[1.5em] lg:rounded-lg lg:px-4 lg:py-2 transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:bg-pink-500 hover:text-white dark:hover:bg-gray-700 dark:hover:text-white"
+          className="hidden lg:inline-block md:inline-block lg:text-[2em]  md:text-[1.5em] md:rounded-lg md:px-2 lg:rounded-lg lg:px-4 lg:py-2 transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:bg-pink-500 hover:text-white dark:hover:bg-gray-700 dark:hover:text-white"
         >
           all businesses
         </Link>
@@ -50,7 +50,7 @@ const Navbar = () => {
               <DropdownMenuTrigger>
                 <Avatar className="h-8 w-8">
                   {/* <AvatarImage src={loggedInUser?.imgURL} /> */}
-                  <AvatarFallback>
+                  <AvatarFallback className="dark:bg-pink-100 dark:bg-opacity-90">
                     {loggedInUser?.firstName[0].toUpperCase()}
                   </AvatarFallback>
                 </Avatar>
@@ -101,13 +101,13 @@ const Navbar = () => {
               <div className="flex gap-5 ">
                 <Link
                   to="/login"
-                  className="lg:text-[2em] lg:rounded-lg md:text-[1.5em] lg:px-4 lg:py-2 transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:bg-pink-500 hover:text-white dark:hover:bg-gray-700 dark:hover:text-white"
+                  className="lg:text-[2em] lg:rounded-lg  md:text-[1.5em] md:rounded-lg md:px-2 lg:px-4 lg:py-2 transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:bg-pink-500 hover:text-white dark:hover:bg-gray-700 dark:hover:text-white"
                 >
                   login
                 </Link>
                 <Link
                   to="/register"
-                  className="lg:text-[2em] lg:rounded-lg md:text-[1.5em] lg:px-4 lg:py-2 transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:bg-pink-500 hover:text-white dark:hover:bg-gray-700 dark:hover:text-white"
+                  className="lg:text-[2em] lg:rounded-lg md:text-[1.5em] md:rounded-lg md:px-2 lg:px-4 lg:py-2 transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:bg-pink-500 hover:text-white dark:hover:bg-gray-700 dark:hover:text-white"
                 >
                   register
                 </Link>

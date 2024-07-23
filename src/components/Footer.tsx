@@ -21,7 +21,7 @@ function Footer() {
           <input
             type="email"
             placeholder="Enter your email"
-            className="px-4 py-3 border border-pink-400 rounded-md focus:outline-none focus:border-pink-600 transition duration-300 placeholder-gray-400 bg-rose-100 dark:bg-pink-200 text-gray-800 shadow-md hover:shadow-lg"
+            className="px-4 py-3 border placeholder:text-gray-600 border-pink-400 rounded-md focus:outline-none focus:border-pink-600 transition duration-300 placeholder-gray-400 bg-rose-100 dark:bg-pink-200 text-gray-800 shadow-md hover:shadow-lg"
             style={{ maxWidth: "600px" }}
           />
           <button className="bg-pink-700 text-white ml-2 px-6 py-3 rounded-md hover:bg-pink-800 transition duration-300">

@@ -97,7 +97,7 @@ const HomePage = () => {
             >
               <Link
                 to="/businesses"
-                className="flex justify-center items-center"
+                className="flex justify-center gap-3 items-center"
               >
                 <p>Explore Now</p>{" "}
                 <p>

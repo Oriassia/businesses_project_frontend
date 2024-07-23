@@ -87,7 +87,7 @@ function ReviewCard({ review, business }: ReviewCardProps) {
                 onClick={() => setShowEditReviewModal(true)}
                 className="text-black"
               >
-                <Pen className="text-gray-800 text-[1.5em]" />
+                <Pen size={20} className="text-gray-800 " />
               </button>
               <button
                 className="text-black"

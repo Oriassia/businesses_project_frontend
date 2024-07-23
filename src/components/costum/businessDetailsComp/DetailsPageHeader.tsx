@@ -28,7 +28,9 @@ const DetailsPageHeader: React.FC<DetailsPageHeaderProps> = ({ business }) => {
       </h1>
       <div className="lg:flex lg:gap-10 py-3 items-center">
         <div className="text-[1.1em] flex pb-3 gap-2 items-center">
-          <p className="text-black ml-2 font-bold">{avgRating.toFixed(1)}</p>
+          <p className="text-black dark:text-gray-300 ml-2 font-bold">
+            {avgRating.toFixed(1)}
+          </p>
           <div className="flex items-center">
             {renderStars(reviews && reviews.length > 0 ? avgRating : 0)}
           </div>
