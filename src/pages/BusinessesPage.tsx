@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { renderStars } from "../utils/renderStars";
 import { GrUserExpert } from "react-icons/gr";
 import { AiOutlineThunderbolt } from "react-icons/ai";
@@ -19,20 +19,23 @@ import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../../store/storeIndex";
 import { getBusinesses } from "../../store/actions/business.actions";
 import SkeletonCards from "@/components/costum/SkeletonCards";
+import { IGetBusinessesOptions } from "@/types/business.types";
+import api from "@/services/api.service";
+import { Button } from "@/components/ui/button";
 
 const BusinessesPage = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [categories, setCategories] = useState<string[] | null>(null);
+  const [maxPages, setMaxPages] = useState<number | null>(null);
   const dispatch = useAppDispatch();
-  const { businesses } = useSelector(
+
+  const { businesses, businessesCount } = useSelector(
     (state: RootState) => state.businessModule
   );
-
-  const uniqueCategories: string[] | undefined = businesses
-    ? Array.from(new Set(businesses.map((business) => business.category)))
-    : undefined;
 
   const toggleDescription = (index: number) => {
     if (expandedIndex === index) {
@@ -46,17 +49,120 @@ const BusinessesPage = () => {
     navigate(`/business/${id}`);
   };
 
+  const handleSearchChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
+    const inputName = ev.target.name;
+    searchParams.set(inputName, ev.target.value);
+    searchParams.set("page", "1");
+    setSearchParams(searchParams);
+  };
+
+  // URL Category query Trimmer
+  const removeCategory = (
+    categories: string,
+    categoryToRemove: string
+  ): string => {
+    const regex = new RegExp(`(^|,)${categoryToRemove}(,|$)`, "g");
+    const newCategories = categories
+      .replace(regex, (match, p1, p2) => (p1 === "," && p2 === "," ? "," : ""))
+      .replace(/^,|,$/g, "") // Remove any leading or trailing commas
+      .trim();
+    return newCategories;
+  };
+
+  const handleCategoryChange = (
+    ev: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => {
+    const target = ev.target as HTMLElement;
+    const targetValue = target.innerText;
+    const currentStr = searchParams.get("category");
+    //no previous query, return value as it is
+    if (!currentStr) {
+      searchParams.set("category", targetValue);
+    } else {
+      //already has query, need to check if is already included handle value accordingly
+      const isIncluded = currentStr.includes(targetValue);
+      if (isIncluded) {
+        //Already included, remove the value
+        const newStr = removeCategory(currentStr, targetValue);
+        if (newStr) searchParams.set("category", newStr);
+        // removed category, still has query
+        else searchParams.delete("category"); // removed category, no remaining query
+      } else {
+        //not included, add to value to string
+        searchParams.set("category", `${currentStr},${targetValue}`);
+      }
+    }
+    setSearchParams(searchParams);
+  };
+
+  const handlePagination = (
+    ev: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    const btnTarget = ev.target as HTMLElement;
+    const btnStr = btnTarget.innerText;
+    const page = searchParams.get("page");
+    let tempVal: number;
+    if (btnStr === "Next") {
+      tempVal = +page! + 1;
+      if (maxPages && tempVal > maxPages) return;
+    } else {
+      tempVal = +page! - 1;
+      if (tempVal < 1) return;
+    }
+    searchParams.set("page", `${tempVal}`);
+    setSearchParams(searchParams);
+  };
+
   useEffect(() => {
     try {
-      dispatch(getBusinesses());
+      const page = searchParams.get("page");
+
+      if (!page || +page < 1) {
+        searchParams.set("page", "1");
+        setSearchParams(searchParams);
+      }
+      const limit = searchParams.get("limit");
+      if (!limit) {
+        searchParams.set("limit", "8");
+        setSearchParams(searchParams);
+      }
+      const options: IGetBusinessesOptions = {
+        params: {
+          name: searchParams.get("name"),
+          category: searchParams.get("category"),
+          rating: searchParams.get("rating"),
+          limit,
+          page: page,
+        },
+      };
+      dispatch(getBusinesses(options));
       setTimeout(() => {
         setLoading(false);
+        // console.log({ businesses }, { businessesCount }, maxPages);
       }, 500);
     } catch (err) {
       setError("Failed to fetch businesses");
       setLoading(false);
     }
+  }, [searchParams]);
+
+  useEffect(() => {
+    async function getCategories() {
+      try {
+        const res = await api.get("/businesses/category");
+        setCategories(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    getCategories();
   }, []);
+
+  useEffect(() => {
+    const limit = searchParams.get("limit");
+    if (businessesCount)
+      setMaxPages(Math.ceil(businessesCount / (limit !== null ? +limit : 8)));
+  }, [businessesCount]);
 
   if (error) {
     return <p>{error}</p>;
@@ -91,8 +197,9 @@ const BusinessesPage = () => {
         </div>
 
         <div className="flex flex-wrap mb-8 gap-4">
+          {/*Filter + Search */}
           {/* Desktop version */}
-          <div className="hidden md:flex flex-wrap gap-4">
+          {/* <div className="hidden md:flex flex-wrap gap-4">
             {uniqueCategories?.map((category) => (
               <button
                 key={category}
@@ -101,26 +208,39 @@ const BusinessesPage = () => {
                 {category}
               </button>
             ))}
-          </div>
-          <div className="md:hidden flex flex-col items-center">
+          </div> */}
+          <input
+            name="name"
+            type="text"
+            placeholder="Search By Name"
+            value={searchParams.get("name") || ""}
+            onChange={handleSearchChange}
+          />
+          <div className="flex flex-col items-center">
             <div className="mt-4 w-full bg-white border border-gray-200 rounded-lg shadow-lg">
               <DropdownMenu>
                 <DropdownMenuTrigger className="relative text-[1.3em] flex items-center px-4 py-2 bg-gradient-to-r from-pink-500 to-pink-700 text-white rounded-lg shadow-lg transition-transform transform hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-pink-300">
                   <span className="pr-1">Filter </span> <IoMdColorFilter />
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
-                  {uniqueCategories?.map((category) => (
-                    <DropdownMenuItem
-                      key={category}
-                      className="flex items-center gap-2 py-2 px-4 hover:bg-pink-100"
-                    >
-                      {category}
-                    </DropdownMenuItem>
-                  ))}
+                  {categories &&
+                    categories.map((category) => (
+                      <DropdownMenuItem
+                        key={category}
+                        className="flex items-center gap-2 py-2 px-4 hover:bg-pink-100"
+                        onClick={handleCategoryChange}
+                      >
+                        {category}
+                      </DropdownMenuItem>
+                    ))}
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
           </div>
+        </div>
+        <div>
+          <Button onClick={handlePagination}>Prev</Button>
+          <Button onClick={handlePagination}>Next</Button>
         </div>
 
         {loading ? (
