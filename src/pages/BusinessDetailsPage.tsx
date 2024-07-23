@@ -77,7 +77,7 @@ const BusinessDetailsPage = () => {
     applySocketListeners();
 
     return () => cleanSocketListeners();
-  }, [id, fetchBusinessAndReviews, loggedInUser, reviews, socket, dispatch]);
+  }, [fetchBusinessAndReviews, loggedInUser, socket, dispatch]);
 
   const handleOpenModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
