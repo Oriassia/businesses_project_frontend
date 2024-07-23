@@ -8,12 +8,14 @@ import { IUserLoginData } from "@/types/user.types";
 import { useNavigate } from "react-router-dom";
 import { FaUser, FaLock } from "react-icons/fa";
 import bananas from "../imgs/bananas.mp4";
+import { useToast } from "@/components/ui/use-toast";
 
 const LoginPage: React.FC = () => {
   const { loggedInUser } = useSelector((state: RootState) => state.userModule);
   const [error, setError] = useState<string | null>(null);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const { toast } = useToast();
 
   useEffect(() => {
     if (loggedInUser !== null) {
@@ -31,10 +33,22 @@ const LoginPage: React.FC = () => {
     };
     try {
       const { data } = await api.post("/auth/login", userLoginData);
-      localStorage.setItem("token", data.token);
-      dispatch(fetchLoggedInUser());
-      navigate("/");
+      if (data) {
+        toast({
+          title: "Logged In Successfully",
+          description: "Nice to see you! :)",
+          className: "bg-pink-300 text-black border-none",
+        });
+        localStorage.setItem("token", data.token);
+        dispatch(fetchLoggedInUser());
+        navigate("/");
+      }
     } catch (error) {
+      toast({
+        title: "Failed to Login",
+        description: "Please check your credentials and try again.",
+        className: "bg-red-500 text-white border-none",
+      });
       console.log(error);
     }
   };
@@ -63,7 +77,7 @@ const LoginPage: React.FC = () => {
               id="username"
               name="username"
               placeholder="Username"
-              className="w-full p-2 text-gray-700 dark:bg-gray-800 focus:outline-none"
+              className="w-full p-2 text-gray-700 dark:text-white dark:bg-gray-800 focus:outline-none"
               required
             />
           </div>
@@ -74,7 +88,7 @@ const LoginPage: React.FC = () => {
               id="password"
               name="password"
               placeholder="Password"
-              className="w-full p-2 text-gray-700 dark:bg-gray-800  focus:outline-none"
+              className="w-full p-2 text-gray-700 dark:text-white dark:bg-gray-800  focus:outline-none"
               required
             />
           </div>

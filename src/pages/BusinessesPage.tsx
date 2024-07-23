@@ -249,7 +249,7 @@ const BusinessesPage = () => {
             {businesses?.map((business, index) => (
               <div
                 key={business._id}
-                className=" bg-white rounded-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105 hover:shadow-xl"
+                className=" bg-white rounded-lg shadow-pink dark:shadow-lg overflow-hidden transition-transform transform hover:scale-105 hover:shadow-xl"
               >
                 <img
                   src={business.image}
