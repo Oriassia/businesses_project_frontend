@@ -19,8 +19,7 @@ const DetailsPageHeader: React.FC<DetailsPageHeaderProps> = ({ business }) => {
           <div className="flex items-center">
             {renderStars(business.rating)}
           </div>
-          <p className="text-black ml-2 font-bold">{business.rating}</p>
-          <p className="pl-1 text-gray-500 tracking-wider font-semibold">{`/ ${business.reviews.length} reviews`}</p>
+          <p className="pl-1 text-gray-500 tracking-wider font-semibold">{`/${business.reviews.length} reviews`}</p>
         </div>
         <div className="flex items-center gap-9 lg:flex-none">
           <p className="text-[1.1em] flex flex-row items-center pb-3 gap-1 text-gray-500 font-normal">
