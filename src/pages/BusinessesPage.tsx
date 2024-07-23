@@ -242,6 +242,7 @@ const BusinessesPage = () => {
                 searchParams.set("rating", `${value}`);
                 setSearchParams(searchParams);
               }}
+              value={null}
             />
           </div>
         </div>
@@ -260,7 +261,7 @@ const BusinessesPage = () => {
               <div
                 key={business._id}
                 onClick={() => handleCardClick(business._id)}
-                className=" bg-white rounded-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105 hover:shadow-xl"
+                className=" bg-white rounded-lg shadow-pink dark:shadow-lg overflow-hidden transition-transform transform hover:scale-105 hover:shadow-xl"
               >
                 <img
                   src={business.image}

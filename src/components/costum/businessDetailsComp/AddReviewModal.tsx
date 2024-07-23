@@ -57,7 +57,10 @@ const AddReviewModal = ({
             id="message"
           />
         </div>
-        <RatingInput onChange={(value: number) => setRatingValue(value)} />
+        <RatingInput
+          value={null}
+          onChange={(value: number) => setRatingValue(value)}
+        />
         <button type="submit">Submit</button>
       </form>
     </Modal>
