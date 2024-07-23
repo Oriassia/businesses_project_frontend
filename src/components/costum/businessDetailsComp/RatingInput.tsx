@@ -2,10 +2,11 @@ import { useState } from "react";
 
 interface RatingProps {
   onChange: (value: number) => void;
+  value: number | null;
 }
 
-const RatingInput = ({ onChange }: RatingProps) => {
-  const [rating, setRating] = useState<number | null>(null);
+const RatingInput = ({ onChange, value }: RatingProps) => {
+  const [rating, setRating] = useState<number | null>(value);
   const [hover, setHover] = useState<number | null>(null);
 
   return (
