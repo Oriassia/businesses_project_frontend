@@ -344,7 +344,7 @@ const HomePage = () => {
               </div>
               <div>
                 <img
-                  src="https://images.pexels.com/photos/774095/pexels-photo-774095.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                  src="https://images.pexels.com/photos/785667/pexels-photo-785667.jpeg"
                   alt="Review 3"
                 />
                 <div className="legend">

@@ -50,7 +50,7 @@ const LoginPage: React.FC = () => {
         <source src={bananas} type="video/mp4" />
         Your browser does not support the video tag.
       </video>
-      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-sm relative z-10">
+      <div className="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg w-full max-w-sm relative z-10">
         <h2 className="text-3xl font-bold mb-6 text-center text-pink-600">
           Login
         </h2>
@@ -63,7 +63,7 @@ const LoginPage: React.FC = () => {
               id="username"
               name="username"
               placeholder="Username"
-              className="w-full p-2 text-gray-700 focus:outline-none"
+              className="w-full p-2 text-gray-700 dark:bg-gray-800 focus:outline-none"
               required
             />
           </div>
@@ -74,7 +74,7 @@ const LoginPage: React.FC = () => {
               id="password"
               name="password"
               placeholder="Password"
-              className="w-full p-2 text-gray-700 focus:outline-none"
+              className="w-full p-2 text-gray-700 dark:bg-gray-800  focus:outline-none"
               required
             />
           </div>
@@ -85,7 +85,7 @@ const LoginPage: React.FC = () => {
             Login
           </button>
         </form>
-        <p className="mt-4 text-gray-600">
+        <p className="mt-4 text-gray-600 dark:text-gray-300">
           Don't have an account?{" "}
           <Link to="/register" className="text-pink-600 hover:underline">
             Register here
