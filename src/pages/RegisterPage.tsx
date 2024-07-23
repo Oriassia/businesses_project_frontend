@@ -1,4 +1,4 @@
-import { useState, useEffect, ChangeEvent, FormEvent } from "react";
+import React, { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
   FaUser,
@@ -23,7 +23,7 @@ interface FormData {
   likes: string[];
 }
 
-const RegisterPage = () => {
+const RegisterPage: React.FC = () => {
   const [formData, setFormData] = useState<FormData>({
     username: "",
     password: "",
@@ -39,7 +39,6 @@ const RegisterPage = () => {
   const [customError, setCustomError] = useState<string | null>(null);
   const { loggedInUser } = useSelector((state: RootState) => state.userModule);
   const [showPassword, setShowPassword] = useState(false);
-
   const { toast } = useToast();
 
   useEffect(() => {
@@ -127,7 +126,7 @@ const RegisterPage = () => {
             />
           </div>
           <div className="flex items-center border-b border-gray-300 py-2">
-            <FaLock className="text-gray-400 mr-3" />
+            <FaLock className="text-gray-400 mr-3 animate-bounce" />
             <div className="relative w-full">
               <input
                 type={showPassword ? "text" : "password"}
