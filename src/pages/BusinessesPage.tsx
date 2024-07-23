@@ -18,8 +18,8 @@ import { getBusinesses } from "../../store/actions/business.actions";
 import SkeletonCards from "@/components/costum/SkeletonCards";
 import { IGetBusinessesOptions } from "@/types/business.types";
 import api from "@/services/api.service";
-import { Button } from "@/components/ui/button";
 import RatingInput from "@/components/costum/businessDetailsComp/RatingInput";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 
 const BusinessesPage = () => {
   const navigate = useNavigate();
@@ -29,7 +29,9 @@ const BusinessesPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [categories, setCategories] = useState<string[] | null>(null);
   const [maxPages, setMaxPages] = useState<number | null>(null);
-  const [ratingValue, setRatingValue] = useState(0);
+  const [ratingValue, setRatingValue] = useState<number>(
+    Number(searchParams.get("rating")) || 0
+  );
   const dispatch = useAppDispatch();
 
   const { businesses, businessesCount } = useSelector(
@@ -169,11 +171,14 @@ const BusinessesPage = () => {
   }
 
   return (
+    // FIRST WRAPPER
     <div className="bg-gradient-to-r from-purple-50 via-pink-50 to-red-50 dark:from-pink-900 dark:via-orange-900 dark:to-red-900  min-h-screen py-8">
-      <div className=" lg:px-[5em] px-[1em]  py-[1em] mb-[2em]">
-        <div className="relative py-20 mb-10 rounded-lg bg-gradient-to-r from-orange-300 via-red-300 to-yellow-300">
+      {/* SECOND WRAPPER */}
+      <div className="flex flex-col gap-8 lg:px-[5em] px-[1em]  py-[1em] mb-[2em]">
+        {/* HEADRER */}
+        <div className="relative py-20 rounded-lg bg-gradient-to-r from-orange-300 via-red-300 to-yellow-300">
           <div className="absolute inset-0 rounded-lg bg-opacity-50 bg-black z-0"></div>
-          <div className="relative  z-10 text-center ">
+          <div className="relative z-10 text-center ">
             <h1 className="text-5xl font-extrabold text-pink-200 mb-6">
               Discover Your Next Favorite Place
             </h1>
@@ -190,20 +195,23 @@ const BusinessesPage = () => {
             />
           </div>
         </div>
-        <div className="flex flex-wrap items-center mb-8 gap-10">
+
+        {/* FILTER SECTION */}
+        <div className="flex flex-wrap items-center gap-10">
           <input
             name="name"
             type="text"
             placeholder="Search By Name"
             value={searchParams.get("name") || ""}
             onChange={handleSearchChange}
-            className="px-2 lg:w-[20em]  h-[3.5em] rounded-md shadow-pink dark:shadow-xl placeholder:text-[1.1em] placeholder:text-gray-500 focus:outline-none focus:border-pink-500 focus:ring-2 focus:ring-pink-300"
+            className="px-3 w-[20em] h-[3.5em] rounded-md shadow-pink placeholder:text-[1.1em] placeholder:text-gray-500 focus:outline-none focus:border-pink-500 focus:ring-2 focus:ring-pink-300"
           />
           <div className="flex flex-row gap-8 items-center">
             <div className=" w-full bg-white items-center rounded-lg shadow-lg">
               <DropdownMenu>
-                <DropdownMenuTrigger className="relative text-[1.3em] flex items-center px-4 py-3 bg-gradient-to-r from-pink-600 via-red-600 to-orange-600 dark:border dark:border-orange-800 text-white rounded-lg shadow-lg transition-transform transform hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-pink-300">
-                  <span className="pr-1">Filter </span> <IoMdColorFilter />
+
+                <DropdownMenuTrigger className="relative text-[1.3em] flex items-center px-4 py-3 bg-gradient-to-r from-pink-500 to-pink-700 text-white rounded-lg shadow-lg transition-transform transform hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-pink-300">
+                  <span className="pr-1">Category </span> <IoMdColorFilter />
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
                   {categories &&
@@ -226,22 +234,45 @@ const BusinessesPage = () => {
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
-            <RatingInput
-              onChange={(value: number) => {
-                searchParams.set("rating", `${value}`);
-                setSearchParams(searchParams);
-                setRatingValue(value);
-              }}
-            />
           </div>
+          <RatingInput
+            onChange={(value: number) => {
+              setRatingValue(value);
+              searchParams.set("rating", `${value}`);
+              setSearchParams(searchParams);
+            }}
+            value={ratingValue}
+          />
         </div>
-        <p className="text-lg font-semibold text-gray-700 dark:text-white mb-4">
-          Page {searchParams.get("page")}/{maxPages}
-        </p>
-        <div>
-          <Button onClick={(ev) => handlePagination(ev, "prev")}>Prev</Button>
-          <Button onClick={(ev) => handlePagination(ev, "next")}>Next</Button>
+
+        {/* PAGINATION */}
+        <div className="flex gap-3">
+          <button
+            onClick={(ev) => handlePagination(ev, "prev")}
+            className={
+              maxPages === 0 || Number(searchParams.get("page")) === 1
+                ? "text-gray-400 cursor-not-allowed"
+                : ""
+            }
+          >
+            <ArrowLeft />
+          </button>
+          <span className="text-lg font-semibold text-gray-700 dark:text-white">
+            Page {!maxPages ? "0/0" : `${searchParams.get("page")}/${maxPages}`}
+          </span>
+          <button
+            onClick={(ev) => handlePagination(ev, "next")}
+            className={
+              maxPages === 0 || Number(searchParams.get("page")) === maxPages
+                ? "text-gray-400 cursor-not-allowed"
+                : ""
+            }
+          >
+            <ArrowRight />
+          </button>
         </div>
+
+        {/* BUSINESSES CARDS */}
         {loading ? (
           <SkeletonCards />
         ) : (

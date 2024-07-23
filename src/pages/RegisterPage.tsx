@@ -1,6 +1,13 @@
-import React, { useState, useEffect, ChangeEvent, FormEvent } from "react";
+import { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { FaUser, FaLock, FaEnvelope, FaIdBadge } from "react-icons/fa";
+import {
+  FaUser,
+  FaLock,
+  FaEnvelope,
+  FaIdBadge,
+  FaEyeSlash,
+  FaEye,
+} from "react-icons/fa";
 import api from "../services/api.service";
 import rimonim from "../imgs/rimons.mp4";
 import { useSelector } from "react-redux";
@@ -16,7 +23,7 @@ interface FormData {
   likes: string[];
 }
 
-const RegisterPage: React.FC = () => {
+const RegisterPage = () => {
   const [formData, setFormData] = useState<FormData>({
     username: "",
     password: "",
@@ -31,6 +38,8 @@ const RegisterPage: React.FC = () => {
   const [success, setSuccess] = useState<string | null>(null);
   const [customError, setCustomError] = useState<string | null>(null);
   const { loggedInUser } = useSelector((state: RootState) => state.userModule);
+  const [showPassword, setShowPassword] = useState(false);
+
   const { toast } = useToast();
 
   useEffect(() => {
@@ -117,24 +126,30 @@ const RegisterPage: React.FC = () => {
               onChange={handleChange}
             />
           </div>
-          <div className="flex items-center border-b border-gray-300 py-2 relative">
-            <div className="group relative flex items-center">
-              <FaLock className="text-gray-400 mr-3 animate-bounce" />
-              <div className="absolute -top-10 left-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gray-700 text-white text-xs rounded py-1 px-2 z-20 w-[15em] whitespace-normal">
-                Password must contain at least 8 characters, including
-                uppercase, lowercase, number, and special character.
+          <div className="flex items-center border-b border-gray-300 py-2">
+            <FaLock className="text-gray-400 mr-3" />
+            <div className="relative w-full">
+              <input
+                type={showPassword ? "text" : "password"}
+                id="password"
+                name="password"
+                placeholder="Password"
+                className="w-full p-2 text-gray-700 dark:text-white dark:bg-gray-800 focus:outline-none"
+                required
+              />
+              <div
+                className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer"
+                onClick={() =>
+                  setShowPassword((prevShowPassword) => !prevShowPassword)
+                }
+              >
+                {showPassword ? (
+                  <FaEyeSlash className="text-gray-500" />
+                ) : (
+                  <FaEye className="text-gray-500" />
+                )}
               </div>
             </div>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              placeholder="Password"
-              className="w-full p-2 text-gray-700 dark:text-white dark:bg-gray-800 focus:outline-none"
-              required
-              value={formData.password}
-              onChange={handleChange}
-            />
           </div>
           <div className="flex items-center border-b border-gray-300 py-2 relative">
             <FaIdBadge className="text-gray-400 mr-3" />
