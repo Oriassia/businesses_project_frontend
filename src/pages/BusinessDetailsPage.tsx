@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import api from "@/services/api.service";
 import { IBusiness, IReview } from "@/types/business.types";
@@ -14,7 +14,6 @@ import { useSelector } from "react-redux";
 import OtherBusinesses from "@/components/costum/businessDetailsComp/OtherBusinesses";
 import { MdPhoneForwarded } from "react-icons/md";
 
-
 const BusinessDetailsPage = () => {
   const [showModal, setShowModal] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
@@ -25,39 +24,7 @@ const BusinessDetailsPage = () => {
   const { reviews } = useSelector((state: RootState) => state.reviewsModule);
   const { loggedInUser } = useSelector((state: RootState) => state.userModule);
   const dispatch = useAppDispatch();
-
-  function applySocketListeners() {
-    socket.on("reviewCreated", fetchBusinessAndReviews);
-    socket.on("reviewDeleted", fetchBusinessAndReviews);
-    socket.on("reviewUpdated", fetchBusinessAndReviews);
-
-    socket.on("likedReview", (payload) => {
-      if (payload.user === loggedInUser?._id) return;
-      const newReviews = reviews!.map((review) => {
-        if (review._id === payload.review)
-          return { ...review, likes: review.likes + 1 };
-        return review;
-      });
-      dispatch(setReviews(newReviews));
-    });
-    socket.on("unlikedReview", (payload) => {
-      if (payload.user === loggedInUser?._id) return;
-      const newReviews = reviews!.map((review) => {
-        if (review._id === payload.review)
-          return { ...review, likes: review.likes - 1 };
-        return review;
-      });
-      dispatch(setReviews(newReviews));
-    });
-  }
-  function cleanSocketListeners() {
-    socket.off("reviewCreated");
-    socket.off("reviewDeleted");
-    socket.off("reviewUpdated");
-    socket.off("likedReview");
-    socket.off("unlikedReview");
-  }
-  const fetchBusinessAndReviews = async () => {
+  const fetchBusinessAndReviews = useCallback(async () => {
     try {
       const response = await api.get(`/businesses/${id}`);
       setBusiness(response.data);
@@ -67,12 +34,50 @@ const BusinessDetailsPage = () => {
       setError("Failed to fetch business details and reviews");
       setLoading(false);
     }
-  };
+  }, [id, dispatch]);
+
   useEffect(() => {
+    const handleLikedReview = (payload: any) => {
+      if (payload.user === loggedInUser?._id) return;
+      const newReviews = reviews!.map((review) => {
+        if (review._id === payload.review)
+          return { ...review, likes: review.likes + 1 };
+        return review;
+      });
+      dispatch(setReviews(newReviews));
+    };
+
+    const handleUnlikedReview = (payload: any) => {
+      if (payload.user === loggedInUser?._id) return;
+      const newReviews = reviews!.map((review) => {
+        if (review._id === payload.review)
+          return { ...review, likes: review.likes - 1 };
+        return review;
+      });
+      dispatch(setReviews(newReviews));
+    };
+
+    const applySocketListeners = () => {
+      socket.on("reviewCreated", fetchBusinessAndReviews);
+      socket.on("reviewDeleted", fetchBusinessAndReviews);
+      socket.on("reviewUpdated", fetchBusinessAndReviews);
+      socket.on("likedReview", handleLikedReview);
+      socket.on("unlikedReview", handleUnlikedReview);
+    };
+
+    const cleanSocketListeners = () => {
+      socket.off("reviewCreated", fetchBusinessAndReviews);
+      socket.off("reviewDeleted", fetchBusinessAndReviews);
+      socket.off("reviewUpdated", fetchBusinessAndReviews);
+      socket.off("likedReview", handleLikedReview);
+      socket.off("unlikedReview", handleUnlikedReview);
+    };
+
     fetchBusinessAndReviews();
     applySocketListeners();
+
     return () => cleanSocketListeners();
-  }, [id]);
+  }, [fetchBusinessAndReviews, loggedInUser, socket, dispatch]);
 
   const handleOpenModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
