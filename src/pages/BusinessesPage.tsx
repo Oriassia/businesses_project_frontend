@@ -19,6 +19,7 @@ import SkeletonCards from "@/components/costum/SkeletonCards";
 import { IGetBusinessesOptions } from "@/types/business.types";
 import api from "@/services/api.service";
 import { Button } from "@/components/ui/button";
+import RatingInput from "@/components/costum/businessDetailsComp/RatingInput";
 
 const BusinessesPage = () => {
   const navigate = useNavigate();
@@ -28,6 +29,7 @@ const BusinessesPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [categories, setCategories] = useState<string[] | null>(null);
   const [maxPages, setMaxPages] = useState<number | null>(null);
+  const [ratingValue, setRatingValue] = useState(0);
   const dispatch = useAppDispatch();
 
   const { businesses, businessesCount } = useSelector(
@@ -223,6 +225,13 @@ const BusinessesPage = () => {
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
+            <RatingInput
+              onChange={(value: number) => {
+                searchParams.set("rating", `${value}`);
+                setSearchParams(searchParams);
+                setRatingValue(value);
+              }}
+            />
           </div>
         </div>
         <p>
