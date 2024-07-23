@@ -89,6 +89,7 @@ const BusinessesPage = () => {
         searchParams.set("category", `${currentStr},${targetValue}`);
       }
     }
+    searchParams.set("page", "1");
     setSearchParams(searchParams);
   };
 
@@ -188,21 +189,6 @@ const BusinessesPage = () => {
           </div>
         </div>
         <div className="flex flex-wrap mb-8 gap-4">
-          {/*Filter + Search */}
-          {/* Desktop version */}
-          {/* <div className="hidden md:flex flex-wrap gap-4">
-            {uniqueCategories?.map((category) => (
-              <button
-                key={category}
-                className="flex items-center gap-2 bg-gradient-to-r dark:from-pink-600 dark:to-red-600 from-pink-300 to-red-300 dark:text-white text-black font-medium py-3 px-8 rounded-lg shadow-md hover:from-pink-500 hover:to-purple-500 transition-all duration-300 transform hover:scale-105 hover:shadow-2xl"
-              >
-                {category}
-                <span className="ml-2 transition-all duration-300 group-hover:ml-4">
-                  &rarr;
-                </span>
-              </button>
-            ))}
-          </div> */}
           <input
             name="name"
             type="text"
@@ -218,25 +204,34 @@ const BusinessesPage = () => {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
                   {categories &&
-                    categories.map((category) => (
-                      <DropdownMenuItem
-                        key={category}
-                        className="flex items-center gap-2 py-2 px-4 hover:bg-pink-100"
-                        onClick={handleCategoryChange}
-                      >
-                        {category}
-                      </DropdownMenuItem>
-                    ))}
+                    categories.map((category) => {
+                      const activeCategories = searchParams.get("category");
+                      return (
+                        <DropdownMenuItem
+                          key={category}
+                          className={
+                            activeCategories?.includes(category)
+                              ? "flex items-center gap-2 py-2 px-4 hover:bg-pink-100 bg-pink-600"
+                              : "flex items-center gap-2 py-2 px-4 hover:bg-pink-100"
+                          }
+                          onClick={handleCategoryChange}
+                        >
+                          {category}
+                        </DropdownMenuItem>
+                      );
+                    })}
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
           </div>
         </div>
+        <p>
+          Page {searchParams.get("page")}/{maxPages}
+        </p>
         <div>
           <Button onClick={handlePagination}>Prev</Button>
           <Button onClick={handlePagination}>Next</Button>
         </div>
-
         {loading ? (
           <SkeletonCards />
         ) : (
@@ -283,9 +278,6 @@ const BusinessesPage = () => {
                       {" "}
                       {renderStars(business.rating)}
                     </div>
-                    <p className="text-gray-500 ml-2">
-                      {business.rating} {`(${business.summOfReviews})`}
-                    </p>
                   </div>
                   <div className="mb-4 text-[1.1em]">
                     <h3 className="font-semibold text-gray-800 mb-1">
