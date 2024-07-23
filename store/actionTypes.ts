@@ -6,6 +6,7 @@ export const LOGOUT_USER = "LOGOUT_USER";
 
 //BUSINESS
 export const GET_BUSINESSES = "GET_BUSINESSES";
+export const GET_BUSINESSES_COUNT = "GET_BUSINESSES_COUNT";
 
 //REVIEWS
 export const SET_REVIEWS = "SET_REVIEWS";
@@ -42,3 +43,5 @@ export type ReviewActionTypes =
   | DeleteReviewAction
   | AddReviewAction
   | UpdateReviewAction;
+
+/////////////////testtttttttttttttttt

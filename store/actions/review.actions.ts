@@ -15,7 +15,7 @@ export function setReviews(reviews: IReview[]): ReviewActionTypes {
 }
 
 // Create review action creator
-export function createReview(reviewContent: IReview) {
+export function createReview(reviewContent: Partial<IReview>) {
   return async (dispatch: Dispatch<ReviewActionTypes>) => {
     try {
       const { data } = await api.post<IReview>(`/reviews`, reviewContent);
