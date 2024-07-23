@@ -1,7 +1,7 @@
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { RootState, useAppDispatch } from "../../store/storeIndex";
 import { fetchLoggedInUser, logout } from "../../store/actions/user.actions";
-import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import {
   DropdownMenu,
@@ -28,22 +28,22 @@ const Navbar = () => {
   };
 
   return (
-    <nav className=" dark:bg-gray-800 lg:px-[5em] px-[1em] lg:py-10 dark:text-pink-500 text-black bg-pink-300 flex justify-between items-center h-16">
+    <nav className="dark:bg-gray-800 lg:px-[5em] px-[1em] lg:py-10 dark:text-pink-500 text-black bg-pink-300 flex justify-between items-center h-16">
       <div className="flex gap-5 items-center">
         <Link
           className="dark:text-pink-500 flex text-gray-800 items-center gap-5 text-[2em] font-bold"
           to="/"
         >
-          REview <GrOverview className=" animate-bounce" />
-        </Link>
-        <Link
-          to="/businesses"
-          className="hidden lg:inline-block lg:text-[2em] lg:rounded-lg lg:px-4 lg:py-2 transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:bg-pink-500 hover:text-white dark:hover:bg-gray-700 dark:hover:text-white"
-        >
-          all businesses
+          REview <GrOverview className="animate-bounce" />
         </Link>
       </div>
       <div className="flex items-center gap-2">
+        <Link
+          to="/businesses"
+          className="hidden lg:inline-block md:inline-block lg:text-[2em] md:pr-4 md:text-[1.5em] lg:rounded-lg lg:px-4 lg:py-2 transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:bg-pink-500 hover:text-white dark:hover:bg-gray-700 dark:hover:text-white"
+        >
+          all businesses
+        </Link>
         {loggedInUser ? (
           <div className="flex items-center gap-1">
             <DropdownMenu>
@@ -56,15 +56,14 @@ const Navbar = () => {
                 </Avatar>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
-                <DropdownMenuItem>
-                  <Link to="/my-profile">My profile</Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Link to="/businesses" className="text-white">
-                    Businesses
+                <DropdownMenuItem className="lg:hidden">
+                  <Link
+                    to="/businesses"
+                    className="text-black dark:text-white lg:hidden"
+                  >
+                    All Businesses
                   </Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem>Settings</DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={() => dispatch(logout())}>
                   Logout
@@ -102,13 +101,13 @@ const Navbar = () => {
               <div className="flex gap-5 ">
                 <Link
                   to="/login"
-                  className="lg:text-[2em] lg:rounded-lg lg:px-4 lg:py-2 transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:bg-pink-500 hover:text-white dark:hover:bg-gray-700 dark:hover:text-white"
+                  className="lg:text-[2em] lg:rounded-lg md:text-[1.5em] lg:px-4 lg:py-2 transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:bg-pink-500 hover:text-white dark:hover:bg-gray-700 dark:hover:text-white"
                 >
                   login
                 </Link>
                 <Link
                   to="/register"
-                  className="lg:text-[2em] lg:rounded-lg lg:px-4 lg:py-2 transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:bg-pink-500 hover:text-white dark:hover:bg-gray-700 dark:hover:text-white"
+                  className="lg:text-[2em] lg:rounded-lg md:text-[1.5em] lg:px-4 lg:py-2 transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:bg-pink-500 hover:text-white dark:hover:bg-gray-700 dark:hover:text-white"
                 >
                   register
                 </Link>
@@ -122,13 +121,13 @@ const Navbar = () => {
         <div className="md:hidden absolute top-14 left-0 right-0 bg-white/95 dark:bg-gray-800/95 p-4 shadow-md z-10">
           <nav>
             <ul className="flex flex-col gap-4">
+              <li>
+                <Link to="/businesses" onClick={toggleMobileMenu}>
+                  All Businesses
+                </Link>
+              </li>
               {!loggedInUser && (
                 <>
-                  <li>
-                    <Link to="/businesses" onClick={toggleMobileMenu}>
-                      Businesses
-                    </Link>
-                  </li>
                   <li>
                     <Link to="/login" onClick={toggleMobileMenu}>
                       Login
@@ -150,22 +149,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
-{
-  /* <div className="flex justify-between lg:px-[4em] items-center">
-  <div className="text-white text-lg font-bold">
-    <Link to="/">Home</Link>
-  </div>
-  <div className="space-x-4">
-    <Link to="/businesses" className="text-white">
-      Businesses
-    </Link>
-    <Link to="/login" className="text-white">
-      Login
-    </Link>
-    <button className="text-white" onClick={() => dispatch(logout())}>
-      Logout
-    </button>
-  </div>
-</div> */
-}

@@ -3,7 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { FaThumbsUp } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../../../../store/storeIndex";
-import { createReview } from "../../../../store/actions/review.actions";
+import {
+  createReview,
+  removeLike,
+  updateLike,
+} from "../../../../store/actions/review.actions";
 import { Button } from "@/components/ui/button";
 import { IBusiness, IReview } from "@/types/business.types";
 import AddReviewModal from "./AddReviewModal";
@@ -59,7 +63,6 @@ const DetailsPageReviews: React.FC<ReviewPropsType> = ({ business }) => {
       setShowAddReviewModal(true);
     }
   };
-
 
   async function handleLike(reviewId: string, action: string) {
     if (!loggedInUser) {
