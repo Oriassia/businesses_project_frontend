@@ -2,11 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../../../../store/storeIndex";
-import {
-  createReview,
-  removeLike,
-  updateLike,
-} from "../../../../store/actions/review.actions";
+import { createReview } from "../../../../store/actions/review.actions";
 import { Button } from "@/components/ui/button";
 import { IBusiness, IReview } from "@/types/business.types";
 import AddReviewModal from "./AddReviewModal";
