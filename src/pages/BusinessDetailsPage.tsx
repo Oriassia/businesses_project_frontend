@@ -61,7 +61,7 @@ const BusinessDetailsPage = () => {
 
       <div className="flex lg:gap-10 gap-2">
         <Button
-          className="mb-4 font-medium bg-pink-800 hover:bg-pink-900"
+          className="mb-4 font-medium bg-pink-700 hover:bg-pink-900"
           onClick={handleOpenModal}
         >
           Show a phone number

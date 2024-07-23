@@ -6,6 +6,7 @@ import Navbar from "./components/Navbar";
 import BusinessDetailsPage from "./pages/BusinessDetailsPage";
 import Footer from "./components/Footer";
 import RegisterPage from "./pages/RegisterPage";
+
 function App() {
   return (
     <>
