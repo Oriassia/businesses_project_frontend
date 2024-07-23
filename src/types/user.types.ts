@@ -7,7 +7,7 @@ import {
 
 // Define UserType
 export interface IUser {
-  userId: string;
+  _id: string;
   username: string;
   firstName: string;
   lastName: string;

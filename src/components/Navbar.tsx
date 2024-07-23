@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { RootState, useAppDispatch } from "../../store/storeIndex";
-import { logout } from "../../store/actions/user.actions";
-import { useState } from "react";
+import { fetchLoggedInUser, logout } from "../../store/actions/user.actions";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import {
   DropdownMenu,
@@ -18,6 +18,10 @@ const Navbar = () => {
   const { loggedInUser } = useSelector((state: RootState) => state.userModule);
   const [desktopMenuOpen, setDesktopMenuOpen] = useState(false);
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) dispatch(fetchLoggedInUser());
+  }, []);
 
   const toggleMobileMenu = () => {
     setDesktopMenuOpen(!desktopMenuOpen);

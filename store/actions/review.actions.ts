@@ -10,6 +10,7 @@ import {
   SET_REVIEWS,
   UPDATE_REVIEW,
 } from "../../store/actionTypes";
+import { toast } from "@/components/ui/use-toast";
 
 // Set reviews action creator
 export function setReviews(reviews: IReview[]): ReviewActionTypes {
@@ -22,9 +23,18 @@ export function createReview(reviewContent: Partial<IReview>) {
     try {
       const { data } = await api.post<IReview>(`/reviews`, reviewContent);
       dispatch({ type: ADD_REVIEW, payload: data });
-    } catch (error) {
+      toast({
+        title: "Review created successfully!",
+        description: "Your review has been added.",
+        variant: "default",
+      });
+    } catch (error: any) {
       console.error("Error creating review:", error);
-      // Handle error, possibly dispatch an error action
+      toast({
+        title: "Error creating review",
+        description: error.message || "An error occurred.",
+        variant: "destructive",
+      });
     }
   };
 }
@@ -35,9 +45,18 @@ export function deleteReview(reviewId: string) {
     try {
       await api.delete(`/reviews/${reviewId}`);
       dispatch({ type: DELETE_REVIEW, payload: reviewId });
-    } catch (error) {
+      toast({
+        title: "Review deleted successfully!",
+        description: "Your review has been removed.",
+        variant: "default",
+      });
+    } catch (error: any) {
       console.error("Error deleting review:", error);
-      // Handle error, possibly dispatch an error action
+      toast({
+        title: "Error deleting review",
+        description: error.message || "An error occurred.",
+        variant: "destructive",
+      });
     }
   };
 }
@@ -49,29 +68,38 @@ export function updateReview(
 ) {
   return async (dispatch: Dispatch<ReviewActionTypes>) => {
     try {
-      const { data } = await api.put<IReview>(
-        `/reviews/${reviewId}`,
-        reviewContent
-      );
+      const { data } = await api.put(`/reviews/${reviewId}`, reviewContent);
       dispatch({
         type: UPDATE_REVIEW,
         payload: { id: reviewId, newData: data },
       });
-    } catch (error) {
-      console.error("Error updating review:", error);
-      // Handle error, possibly dispatch an error action
+      toast({
+        title: "Review updated successfully!",
+        description: "Your review update is saved.",
+        variant: "default",
+      });
+    } catch (error: any) {
+      if (error.response.data.message === "User not authorized") {
+        toast({
+          title: "Error updating review",
+          description: error.message || "user not auth.",
+          variant: "destructive",
+        });
+      } else {
+        console.error("Error updating review:", error);
+      }
     }
   };
 }
 
-export const updateLike = (reviewId: string) => {
+export const updateLike = (reviewId: string): ReviewActionTypes => {
   return {
     type: REVIEW_UPDATE_LIKE,
     payload: reviewId,
   };
 };
 
-export const removeLike = (reviewId: string) => {
+export const removeLike = (reviewId: string): ReviewActionTypes => {
   return {
     type: REVIEW_REMOVE_LIKE,
     payload: reviewId,

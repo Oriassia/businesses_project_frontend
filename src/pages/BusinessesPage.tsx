@@ -231,6 +231,7 @@ const BusinessesPage = () => {
                 setSearchParams(searchParams);
                 setRatingValue(value);
               }}
+              value={null}
             />
           </div>
         </div>
