@@ -4,6 +4,8 @@ import { Dispatch } from "redux";
 import {
   ADD_REVIEW,
   DELETE_REVIEW,
+  REVIEW_REMOVE_LIKE,
+  REVIEW_UPDATE_LIKE,
   ReviewActionTypes,
   SET_REVIEWS,
   UPDATE_REVIEW,
@@ -61,3 +63,17 @@ export function updateReview(
     }
   };
 }
+
+export const updateLike = (reviewId: string) => {
+  return {
+    type: REVIEW_UPDATE_LIKE,
+    payload: reviewId,
+  };
+};
+
+export const removeLike = (reviewId: string) => {
+  return {
+    type: REVIEW_REMOVE_LIKE,
+    payload: reviewId,
+  };
+};

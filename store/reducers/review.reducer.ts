@@ -1,6 +1,8 @@
 import {
   ADD_REVIEW,
   DELETE_REVIEW,
+  REVIEW_REMOVE_LIKE,
+  REVIEW_UPDATE_LIKE,
   ReviewActionTypes,
   ReviewsInitialStateType,
   SET_REVIEWS,
@@ -46,6 +48,30 @@ function reviewReducer(
         ),
       };
 
+    case REVIEW_UPDATE_LIKE:
+      return {
+        ...state,
+        reviews: state.reviews?.map((review) =>
+          review._id === action.payload
+            ? {
+                ...review,
+                likes: review.likes + 1,
+              }
+            : review
+        ),
+      };
+    case REVIEW_REMOVE_LIKE:
+      return {
+        ...state,
+        reviews: state.reviews?.map((review) =>
+          review._id === action.payload
+            ? {
+                ...review,
+                likes: review.likes - 1,
+              }
+            : review
+        ),
+      };
     default:
       return state;
   }
