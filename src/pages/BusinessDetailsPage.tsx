@@ -109,7 +109,7 @@ const BusinessDetailsPage = () => {
 
         <div>
           <Button
-            className="mb-4 font-medium bg-pink-700 text-[1.01em] flex items-center text-center justify-center gap-2 hover:bg-pink-900"
+            className="mb-4 font-medium bg-pink-700 text-[1.01em] text-white flex items-center  text-center justify-center gap-2 hover:bg-pink-900"
             onClick={handleOpenModal}
           >
             <span>Show a phone number</span>
@@ -120,14 +120,16 @@ const BusinessDetailsPage = () => {
         </div>
         {showModal && (
           <Modal isOpen={showModal} onClose={handleCloseModal}>
-            <h2 className="text-xl font-bold mb-4">
+            <h2 className="text-xl dark:text-gray-800 font-bold mb-4">
               {business.name} {`on ${business.contactInfo.address}`}
             </h2>
-            <p className="p-5 bg-pink-50 rounded-md text-xl">
+            <p className="p-5 bg-pink-50 dark:text-gray-700 rounded-md text-xl">
               {business.contactInfo.phoneNumber}
             </p>
             <div className="mt-4 p-5 bg-pink-50 rounded-md">
-              <p className="mb-4">Did you manage to reach them?</p>
+              <p className="mb-4 dark:text-gray-700">
+                Did you manage to reach them?
+              </p>
               <div className="flex space-x-4">
                 <Button
                   className="bg-green-500 hover:bg-green-600"
@@ -149,8 +151,10 @@ const BusinessDetailsPage = () => {
                 </Button>
               </div>
               <p className="text-sm text-zinc-500 pt-4 max-w-sm">
-                Tell them you found a number on Gurmania — companies work better
-                if they know you can influence their rating
+                Tell them you found a number on{" "}
+                <span className="text-pink-800 font-medium">REview</span> —
+                companies work better if they know you can influence their
+                rating
               </p>
             </div>
           </Modal>

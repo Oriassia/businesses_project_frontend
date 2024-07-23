@@ -35,10 +35,16 @@ export function AlertDialogComp({
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel onClick={() => setShowAlertDialog(false)}>
+          <AlertDialogCancel
+            onClick={() => setShowAlertDialog(false)}
+            className="bg-pink-100 border-none dark:text-black hover:bg-pink-200"
+          >
             Cancel
           </AlertDialogCancel>
-          <AlertDialogAction onClick={() => dispatch(deleteReview(reviewId))}>
+          <AlertDialogAction
+            onClick={() => dispatch(deleteReview(reviewId))}
+            className="bg-pink-400 text-black border-none hover:bg-pink-500"
+          >
             Continue
           </AlertDialogAction>
         </AlertDialogFooter>

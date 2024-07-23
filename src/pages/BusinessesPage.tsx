@@ -197,12 +197,12 @@ const BusinessesPage = () => {
             placeholder="Search By Name"
             value={searchParams.get("name") || ""}
             onChange={handleSearchChange}
-            className="px-2 w-[20em] h-[3.5em] rounded-md shadow-pink placeholder:text-[1.1em] placeholder:text-gray-500 focus:outline-none focus:border-pink-500 focus:ring-2 focus:ring-pink-300"
+            className="px-2 lg:w-[20em]  h-[3.5em] rounded-md shadow-pink dark:shadow-xl placeholder:text-[1.1em] placeholder:text-gray-500 focus:outline-none focus:border-pink-500 focus:ring-2 focus:ring-pink-300"
           />
           <div className="flex flex-row gap-8 items-center">
             <div className=" w-full bg-white items-center rounded-lg shadow-lg">
               <DropdownMenu>
-                <DropdownMenuTrigger className="relative text-[1.3em] flex items-center px-4 py-3 bg-gradient-to-r from-pink-500 to-pink-700 text-white rounded-lg shadow-lg transition-transform transform hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-pink-300">
+                <DropdownMenuTrigger className="relative text-[1.3em] flex items-center px-4 py-3 bg-gradient-to-r from-pink-600 via-red-600 to-orange-600 dark:border dark:border-orange-800 text-white rounded-lg shadow-lg transition-transform transform hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-pink-300">
                   <span className="pr-1">Filter </span> <IoMdColorFilter />
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
@@ -214,8 +214,8 @@ const BusinessesPage = () => {
                           key={category}
                           className={
                             activeCategories?.includes(category)
-                              ? "flex items-center gap-2 py-2 px-4 hover:bg-pink-100 bg-pink-600"
-                              : "flex items-center gap-2 py-2 px-4 hover:bg-pink-100"
+                              ? "flex items-center gap-2 py-2 px-4 hover:bg-pink-100 bg-pink-400"
+                              : "flex items-center gap-2 py-2 px-4 hover:bg-pink-200"
                           }
                           onClick={handleCategoryChange}
                         >
