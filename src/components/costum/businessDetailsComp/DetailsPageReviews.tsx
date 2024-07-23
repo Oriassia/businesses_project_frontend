@@ -20,7 +20,6 @@ import {
   updateUserLike,
 } from "../../../../store/actions/user.actions";
 
-
 interface ReviewPropsType {
   business: IBusiness;
 }
