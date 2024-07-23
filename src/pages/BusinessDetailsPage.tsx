@@ -61,10 +61,10 @@ const BusinessDetailsPage = () => {
 
       <div className="flex lg:gap-10 gap-2">
         <Button
-          className="mb-4 font-medium bg-cyan-800 hover:bg-cyan-900"
+          className="mb-4 font-medium bg-pink-800 hover:bg-pink-900"
           onClick={handleOpenModal}
         >
-          {business.contactInfo.phoneNumber}... — show
+          Show a phone number
         </Button>
       </div>
       {showModal && (
@@ -72,10 +72,10 @@ const BusinessDetailsPage = () => {
           <h2 className="text-xl font-bold mb-4">
             {business.name} {`on ${business.contactInfo.address}`}
           </h2>
-          <p className="p-5 bg-cyan-50 rounded-md text-xl">
+          <p className="p-5 bg-pink-50 rounded-md text-xl">
             {business.contactInfo.phoneNumber}
           </p>
-          <div className="mt-4 p-5 bg-cyan-50 rounded-md">
+          <div className="mt-4 p-5 bg-pink-50 rounded-md">
             <p className="mb-4">Did you manage to reach them?</p>
             <div className="flex space-x-4">
               <Button

@@ -23,7 +23,7 @@ const DetailsPageHeader: React.FC<DetailsPageHeaderProps> = ({ business }) => {
 
   return (
     <>
-      <h1 className="text-3xl font-bold py-4">
+      <h1 className="text-3xl font-bold py-8">
         {business.name} {`on ${business.contactInfo.address}`}
       </h1>
       <div className="lg:flex lg:gap-10 py-3 items-center">

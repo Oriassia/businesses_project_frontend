@@ -1,9 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { renderStars } from "../utils/renderStars";
-import { GrUserExpert } from "react-icons/gr";
-import { AiOutlineThunderbolt } from "react-icons/ai";
-import { MdOutlineCategory } from "react-icons/md";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -92,6 +89,7 @@ const BusinessesPage = () => {
         searchParams.set("category", `${currentStr},${targetValue}`);
       }
     }
+    searchParams.set("page", "1");
     setSearchParams(searchParams);
   };
 
@@ -169,46 +167,28 @@ const BusinessesPage = () => {
   }
 
   return (
-    <div className="bg-gradient-to-r from-purple-50 via-pink-50 to-red-50 min-h-screen py-8">
-      <div className=" lg:px-[5em]">
-        <div className="relative">
-          <h1 className="text-4xl font-bold w-fit text-gray-800 mb-4 transition-transform transform hover:scale-105">
-            Explore Remarkable Places
-          </h1>
-        </div>
-        <p className="text-lg text-gray-600 mb-4">
-          Dive into a variety of businesses, from innovative newcomers to
-          beloved classics. <br />
-          Easily find what you need and start exploring now!
-        </p>
-        <div className="flex lg:justify-center text-[2em] lg:gap-6 mb-6">
-          <div className="flex items-center gap-2 text-pink-600">
-            <GrUserExpert />
-            <span className="text-xl font-semibold">Expertly Chosen</span>
+    <div className="bg-gradient-to-r from-purple-50 via-pink-50 to-red-50 dark:from-pink-900 dark:via-orange-900 dark:to-red-900  min-h-screen py-8">
+      <div className=" lg:px-[5em] px-[1em]  py-[1em] mb-[2em]">
+        <div className="relative py-20 mb-10 rounded-lg bg-gradient-to-r from-orange-300 via-red-300 to-yellow-300">
+          <div className="absolute inset-0 rounded-lg bg-opacity-50 bg-black z-0"></div>
+          <div className="relative  z-10 text-center ">
+            <h1 className="text-5xl font-extrabold text-pink-200 mb-6">
+              Discover Your Next Favorite Place
+            </h1>
+            <p className="text-xl text-pink-100 mb-8">
+              Explore an extensive collection of top-rated spots. <br />
+              Find new gems and old favorites effortlessly.
+            </p>
           </div>
-          <div className="flex items-center gap-2 text-pink-600">
-            <AiOutlineThunderbolt />
-            <span className="text-xl font-semibold">Quick Access</span>
-          </div>
-          <div className="flex items-center gap-2 text-pink-600">
-            <MdOutlineCategory />
-            <span className="text-xl font-semibold">Diverse Categories</span>
+          <div className="absolute top-0 left-0 w-full h-full overflow-hidden  z-0 rounded-md">
+            <img
+              src="https://images.pexels.com/photos/61127/pexels-photo-61127.jpeg"
+              alt="Background"
+              className="w-full h-full object-cover opacity-40 rounded-md"
+            />
           </div>
         </div>
-
         <div className="flex flex-wrap mb-8 gap-4">
-          {/*Filter + Search */}
-          {/* Desktop version */}
-          {/* <div className="hidden md:flex flex-wrap gap-4">
-            {uniqueCategories?.map((category) => (
-              <button
-                key={category}
-                className="flex items-center gap-2 bg-pink-600 text-white py-2 px-6 rounded-full shadow-lg hover:bg-pink-700 transition duration-300 transform hover:scale-105 hover:shadow-xl"
-              >
-                {category}
-              </button>
-            ))}
-          </div> */}
           <input
             name="name"
             type="text"
@@ -224,25 +204,34 @@ const BusinessesPage = () => {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
                   {categories &&
-                    categories.map((category) => (
-                      <DropdownMenuItem
-                        key={category}
-                        className="flex items-center gap-2 py-2 px-4 hover:bg-pink-100"
-                        onClick={handleCategoryChange}
-                      >
-                        {category}
-                      </DropdownMenuItem>
-                    ))}
+                    categories.map((category) => {
+                      const activeCategories = searchParams.get("category");
+                      return (
+                        <DropdownMenuItem
+                          key={category}
+                          className={
+                            activeCategories?.includes(category)
+                              ? "flex items-center gap-2 py-2 px-4 hover:bg-pink-100 bg-pink-600"
+                              : "flex items-center gap-2 py-2 px-4 hover:bg-pink-100"
+                          }
+                          onClick={handleCategoryChange}
+                        >
+                          {category}
+                        </DropdownMenuItem>
+                      );
+                    })}
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
           </div>
         </div>
+        <p>
+          Page {searchParams.get("page")}/{maxPages}
+        </p>
         <div>
           <Button onClick={handlePagination}>Prev</Button>
           <Button onClick={handlePagination}>Next</Button>
         </div>
-
         {loading ? (
           <SkeletonCards />
         ) : (
@@ -250,7 +239,7 @@ const BusinessesPage = () => {
             {businesses?.map((business, index) => (
               <div
                 key={business._id}
-                className=" bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105 hover:shadow-xl"
+                className=" bg-white rounded-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105 hover:shadow-xl"
               >
                 <img
                   src={business.image}
@@ -289,9 +278,6 @@ const BusinessesPage = () => {
                       {" "}
                       {renderStars(business.rating)}
                     </div>
-                    <p className="text-gray-500 ml-2">
-                      {business.rating} {`(${business.summOfReviews})`}
-                    </p>
                   </div>
                   <div className="mb-4 text-[1.1em]">
                     <h3 className="font-semibold text-gray-800 mb-1">
