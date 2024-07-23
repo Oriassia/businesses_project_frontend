@@ -10,9 +10,9 @@ const RatingInput = ({ onChange, value }: RatingProps) => {
   const [hover, setHover] = useState<number | null>(null);
 
   return (
-    <div className="flex">
+    <div className="flex items-center">
       {[1, 2, 3, 4, 5].map((star) => (
-        <label key={star} className="relative cursor-pointer">
+        <label key={star} className="relative items-center cursor-pointer">
           <input
             type="radio"
             name="stars"
