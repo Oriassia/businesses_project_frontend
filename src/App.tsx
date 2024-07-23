@@ -6,6 +6,8 @@ import Navbar from "./components/Navbar";
 import BusinessDetailsPage from "./pages/BusinessDetailsPage";
 import Footer from "./components/Footer";
 import RegisterPage from "./pages/RegisterPage";
+import io from "socket.io-client";
+export const socket = io("http://localhost:3000");
 
 function App() {
   return (

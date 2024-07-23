@@ -20,6 +20,7 @@ import { IGetBusinessesOptions } from "@/types/business.types";
 import api from "@/services/api.service";
 import { Button } from "@/components/ui/button";
 import RatingInput from "@/components/costum/businessDetailsComp/RatingInput";
+import { socket } from "@/App";
 
 const BusinessesPage = () => {
   const navigate = useNavigate();
@@ -29,14 +30,17 @@ const BusinessesPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [categories, setCategories] = useState<string[] | null>(null);
   const [maxPages, setMaxPages] = useState<number | null>(null);
-  const [ratingValue, setRatingValue] = useState(0);
   const dispatch = useAppDispatch();
 
   const { businesses, businessesCount } = useSelector(
     (state: RootState) => state.businessModule
   );
 
-  const toggleDescription = (index: number) => {
+  const toggleDescription = (
+    ev: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    index: number
+  ) => {
+    ev.stopPropagation();
     if (expandedIndex === index) {
       setExpandedIndex(null);
     } else {
@@ -136,6 +140,9 @@ const BusinessesPage = () => {
         },
       };
       dispatch(getBusinesses(options));
+      socket.on("reviewCreated", (review) => dispatch(getBusinesses(options)));
+      socket.on("reviewDeleted", (review) => dispatch(getBusinesses(options)));
+      socket.on("reviewUpdated", (review) => dispatch(getBusinesses(options)));
       setTimeout(() => {
         setLoading(false);
         // console.log({ businesses }, { businessesCount }, maxPages);
@@ -144,6 +151,11 @@ const BusinessesPage = () => {
       setError("Failed to fetch businesses");
       setLoading(false);
     }
+    return () => {
+      socket.off("reviewCreated");
+      socket.off("reviewDeleted");
+      socket.off("reviewUpdated");
+    };
   }, [searchParams]);
 
   useEffect(() => {
@@ -229,7 +241,6 @@ const BusinessesPage = () => {
               onChange={(value: number) => {
                 searchParams.set("rating", `${value}`);
                 setSearchParams(searchParams);
-                setRatingValue(value);
               }}
               value={null}
             />
@@ -249,19 +260,16 @@ const BusinessesPage = () => {
             {businesses?.map((business, index) => (
               <div
                 key={business._id}
+                onClick={() => handleCardClick(business._id)}
                 className=" bg-white rounded-lg shadow-pink dark:shadow-lg overflow-hidden transition-transform transform hover:scale-105 hover:shadow-xl"
               >
                 <img
                   src={business.image}
                   alt={business.name}
-                  onClick={() => handleCardClick(business._id)}
                   className="w-full h-48 cursor-pointer object-cover rounded-t-lg"
                 />
                 <div className="p-4">
-                  <h2
-                    className="text-xl font-semibold cursor-pointer text-gray-800 mb-2 hover:text-pink-600 transition-colors duration-300"
-                    onClick={() => handleCardClick(business._id)}
-                  >
+                  <h2 className="text-xl font-semibold cursor-pointer text-gray-800 mb-2 hover:text-pink-600 transition-colors duration-300">
                     {business.name}
                   </h2>
                   <p className="text-gray-700 mb-4">
@@ -269,7 +277,7 @@ const BusinessesPage = () => {
                       ? business.description
                       : `${business.description.substring(0, 100)}...  `}
                     <button
-                      onClick={() => toggleDescription(index)}
+                      onClick={(ev) => toggleDescription(ev, index)}
                       className="text-cyan-800 font-semibold underline mb-4 lg:pl-3 hover:underline"
                     >
                       {expandedIndex === index

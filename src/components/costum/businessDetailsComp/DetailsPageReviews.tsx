@@ -16,7 +16,6 @@ import {
 } from "../../../../store/actions/user.actions";
 import ReviewCard from "../ReviewCard";
 
-
 interface ReviewPropsType {
   business: IBusiness;
 }

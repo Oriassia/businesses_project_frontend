@@ -127,26 +127,34 @@ const HomePage = () => {
               </motion.p>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 items-center gap-8">
-              <CategoryCard
-                title="Cafes"
-                icon={<FaCoffee size={48} className="text-pink-600" />}
-                image="https://images.pexels.com/photos/2074130/pexels-photo-2074130.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-              />
-              <CategoryCard
-                title="Restaurants"
-                icon={<FaPizzaSlice size={48} className="text-pink-600" />}
-                image="https://images.pexels.com/photos/8176833/pexels-photo-8176833.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-              />
-              <CategoryCard
-                title="Bars"
-                icon={<FaGlassCheers size={48} className="text-pink-600" />}
-                image="https://images.pexels.com/photos/34577/pexels-photo.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-              />
-              <CategoryCard
-                title="Shops"
-                icon={<FaShoppingCart size={48} className="text-pink-600" />}
-                image="https://images.pexels.com/photos/3965548/pexels-photo-3965548.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-              />
+              <Link to="/businesses?category=Cafe">
+                <CategoryCard
+                  title="Cafes"
+                  icon={<FaCoffee size={48} className="text-pink-600" />}
+                  image="https://images.pexels.com/photos/2074130/pexels-photo-2074130.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                />
+              </Link>
+              <Link to="/businesses?category=Restaurant">
+                <CategoryCard
+                  title="Restaurants"
+                  icon={<FaPizzaSlice size={48} className="text-pink-600" />}
+                  image="https://images.pexels.com/photos/8176833/pexels-photo-8176833.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                />
+              </Link>
+              <Link to="/businesses?category=Gym">
+                <CategoryCard
+                  title="Gyms"
+                  icon={<FaGlassCheers size={48} className="text-pink-600" />}
+                  image="https://images.pexels.com/photos/7031705/pexels-photo-7031705.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                />
+              </Link>
+              <Link to="/businesses?category=Bookstore">
+                <CategoryCard
+                  title="Book Stores"
+                  icon={<FaShoppingCart size={48} className="text-pink-600" />}
+                  image="https://images.pexels.com/photos/2553424/pexels-photo-2553424.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                />
+              </Link>
             </div>
           </section>
         </div>

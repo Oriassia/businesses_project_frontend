@@ -1,16 +1,19 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import api from "@/services/api.service";
-import { IBusiness } from "@/types/business.types";
+import { IBusiness, IReview } from "@/types/business.types";
 import DetailsPageHeader from "@/components/costum/businessDetailsComp/DetailsPageHeader";
 import Modal from "@/components/ui/modal";
 import { Button } from "@/components/ui/button";
 import DetailsPageInfo from "@/components/costum/businessDetailsComp/DetailsPageInfo";
 import DetailsPageReviews from "@/components/costum/businessDetailsComp/DetailsPageReviews";
-import { useAppDispatch } from "../../store/storeIndex";
+import { RootState, useAppDispatch } from "../../store/storeIndex";
 import { setReviews } from "../../store/actions/review.actions";
+import { socket } from "@/App";
+import { useSelector } from "react-redux";
 import OtherBusinesses from "@/components/costum/businessDetailsComp/OtherBusinesses";
 import { MdPhoneForwarded } from "react-icons/md";
+
 
 const BusinessDetailsPage = () => {
   const [showModal, setShowModal] = useState(false);
@@ -19,22 +22,56 @@ const BusinessDetailsPage = () => {
   const [business, setBusiness] = useState<IBusiness | undefined>(undefined);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const { reviews } = useSelector((state: RootState) => state.reviewsModule);
+  const { loggedInUser } = useSelector((state: RootState) => state.userModule);
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    const fetchBusinessAndReviews = async () => {
-      try {
-        const response = await api.get(`/businesses/${id}`);
-        setBusiness(response.data);
-        dispatch(setReviews(response.data.reviews));
-        setLoading(false);
-      } catch (err) {
-        setError("Failed to fetch business details and reviews");
-        setLoading(false);
-      }
-    };
+  function applySocketListeners() {
+    socket.on("reviewCreated", fetchBusinessAndReviews);
+    socket.on("reviewDeleted", fetchBusinessAndReviews);
+    socket.on("reviewUpdated", fetchBusinessAndReviews);
 
+    socket.on("likedReview", (payload) => {
+      if (payload.user === loggedInUser?._id) return;
+      const newReviews = reviews!.map((review) => {
+        if (review._id === payload.review)
+          return { ...review, likes: review.likes + 1 };
+        return review;
+      });
+      dispatch(setReviews(newReviews));
+    });
+    socket.on("unlikedReview", (payload) => {
+      if (payload.user === loggedInUser?._id) return;
+      const newReviews = reviews!.map((review) => {
+        if (review._id === payload.review)
+          return { ...review, likes: review.likes - 1 };
+        return review;
+      });
+      dispatch(setReviews(newReviews));
+    });
+  }
+  function cleanSocketListeners() {
+    socket.off("reviewCreated");
+    socket.off("reviewDeleted");
+    socket.off("reviewUpdated");
+    socket.off("likedReview");
+    socket.off("unlikedReview");
+  }
+  const fetchBusinessAndReviews = async () => {
+    try {
+      const response = await api.get(`/businesses/${id}`);
+      setBusiness(response.data);
+      dispatch(setReviews(response.data.reviews));
+      setLoading(false);
+    } catch (err) {
+      setError("Failed to fetch business details and reviews");
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
     fetchBusinessAndReviews();
+    applySocketListeners();
+    return () => cleanSocketListeners();
   }, [id]);
 
   const handleOpenModal = () => setShowModal(true);
