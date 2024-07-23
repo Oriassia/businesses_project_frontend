@@ -44,6 +44,7 @@ const BusinessDetailsPage = () => {
           return { ...review, likes: review.likes + 1 };
         return review;
       });
+
       dispatch(setReviews(newReviews));
     };
 
@@ -54,6 +55,7 @@ const BusinessDetailsPage = () => {
           return { ...review, likes: review.likes - 1 };
         return review;
       });
+
       dispatch(setReviews(newReviews));
     };
 
@@ -72,12 +74,13 @@ const BusinessDetailsPage = () => {
       socket.off("likedReview", handleLikedReview);
       socket.off("unlikedReview", handleUnlikedReview);
     };
-
-    fetchBusinessAndReviews();
     applySocketListeners();
 
     return () => cleanSocketListeners();
-  }, [fetchBusinessAndReviews, loggedInUser, socket, dispatch]);
+  }, [reviews, fetchBusinessAndReviews, loggedInUser, socket, dispatch]);
+  useEffect(() => {
+    fetchBusinessAndReviews();
+  }, [id]);
 
   const handleOpenModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
