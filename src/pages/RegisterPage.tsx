@@ -1,8 +1,10 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { FaUser, FaLock, FaEnvelope, FaIdBadge } from "react-icons/fa";
 import api from "../services/api.service";
 import rimonim from "../imgs/rimons.mp4";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/storeIndex";
 
 const RegisterPage: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -13,9 +15,17 @@ const RegisterPage: React.FC = () => {
     email: "",
   });
 
+  const navigate = useNavigate();
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [customError, setCustomError] = useState<string | null>(null);
+  const { loggedInUser } = useSelector((state: RootState) => state.userModule);
+
+  useEffect(() => {
+    if (loggedInUser !== null) {
+      navigate("/");
+    }
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -66,7 +76,7 @@ const RegisterPage: React.FC = () => {
         <source src={rimonim} type="video/mp4" />
         Your browser does not support the video tag.
       </video>
-      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-sm relative z-10">
+      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-sm relative z-10 dark:bg-gray-800">
         <h2 className="text-3xl font-bold mb-6 text-center text-pink-600">
           Register
         </h2>
@@ -81,7 +91,7 @@ const RegisterPage: React.FC = () => {
               id="username"
               name="username"
               placeholder="Username"
-              className="w-full p-2 text-gray-700 focus:outline-none"
+              className="w-full p-2 text-gray-700 dark:bg-gray-800 focus:outline-none"
               required
               value={formData.username}
               onChange={handleChange}
@@ -100,7 +110,7 @@ const RegisterPage: React.FC = () => {
               id="password"
               name="password"
               placeholder="Password"
-              className="w-full p-2 text-gray-700 focus:outline-none"
+              className="w-full p-2 text-gray-700 dark:bg-gray-800 focus:outline-none"
               required
               value={formData.password}
               onChange={handleChange}
@@ -113,7 +123,7 @@ const RegisterPage: React.FC = () => {
               id="firstName"
               name="firstName"
               placeholder="First Name"
-              className="w-full p-2 text-gray-700 focus:outline-none"
+              className="w-full p-2 text-gray-700 dark:bg-gray-800 focus:outline-none"
               required
               value={formData.firstName}
               onChange={handleChange}
@@ -126,7 +136,7 @@ const RegisterPage: React.FC = () => {
               id="lastName"
               name="lastName"
               placeholder="Last Name"
-              className="w-full p-2 text-gray-700 focus:outline-none"
+              className="w-full p-2 text-gray-700 dark:bg-gray-800 focus:outline-none"
               required
               value={formData.lastName}
               onChange={handleChange}
@@ -139,7 +149,7 @@ const RegisterPage: React.FC = () => {
               id="email"
               name="email"
               placeholder="Email"
-              className="w-full p-2 text-gray-700 focus:outline-none"
+              className="w-full p-2 text-gray-700 dark:bg-gray-800 focus:outline-none"
               required
               value={formData.email}
               onChange={handleChange}
@@ -152,7 +162,7 @@ const RegisterPage: React.FC = () => {
             Register
           </button>
         </form>
-        <p className="mt-4 text-gray-600">
+        <p className="mt-4 text-gray-600 dark:text-gray-200">
           Already have an account?{" "}
           <Link to="/login" className="text-pink-600 hover:underline">
             Login here

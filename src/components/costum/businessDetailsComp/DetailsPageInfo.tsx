@@ -14,10 +14,10 @@ function DetailsPageInfo({
 }: BusinessInfoProps) {
   return (
     <div className="bg-white p-6 rounded-lg shadow-xl lg:w-[50em]">
-      <h1 className="relative text-[2em] font-semibold pb-2 after:absolute after:left-0 after:bottom-0 after:w-full after:h-1 after:bg-pink-500">
+      <h1 className="relative text-[2em] font-semibold pb-2 dark:text-gray-800 after:absolute after:left-0 after:bottom-0 after:w-full after:h-1 after:bg-pink-500">
         Info
       </h1>
-      <p className="font-medium my-4 text-lg">Description:</p>
+      <p className="font-medium my-4 text-lg dark:text-black">Description:</p>
       <div className="flex flex-col lg:flex-row">
         <p className="text-gray-700 mb-4 lg:w-[50em]">
           {isExpanded
@@ -32,11 +32,13 @@ function DetailsPageInfo({
         </p>
       </div>
       <p className="text-gray-600 mb-4">
-        <span className="font-medium text-black">Category:</span>{" "}
+        <span className="font-medium text-lg text-black">Category:</span>{" "}
         {business.category}
       </p>
       <div className="mb-4">
-        <h3 className="font-semibold text-lg mb-3">Contact Info</h3>
+        <h3 className="font-semibold text-lg dark:text-black mb-3">
+          Contact Info:
+        </h3>
         <div className="flex items-center mb-2">
           <FaMapMarkerAlt className="text-pink-500 mr-2" />
           <p className="text-gray-600">

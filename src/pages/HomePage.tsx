@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   FaStar,
@@ -17,8 +17,18 @@ import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import bgBanana from "../imgs/bgBanana.jpg";
 import { TbHandClick } from "react-icons/tb";
+import { useAppDispatch } from "../../store/storeIndex";
+import { fetchLoggedInUser } from "../../store/actions/user.actions";
 
-const HomePage: React.FC = () => {
+const HomePage = () => {
+  // const { loggedInUser } = useSelector((state: RootState) => state.userModule);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) dispatch(fetchLoggedInUser());
+  }, []);
+
+
   return (
     <div className="lg:min-h-screen bg-gradient-to-r from-purple-50 via-pink-50 to-red-50">
       <div>
@@ -334,7 +344,7 @@ const HomePage: React.FC = () => {
               </div>
               <div>
                 <img
-                  src="https://images.pexels.com/photos/774095/pexels-photo-774095.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                  src="https://images.pexels.com/photos/785667/pexels-photo-785667.jpeg"
                   alt="Review 3"
                 />
                 <div className="legend">

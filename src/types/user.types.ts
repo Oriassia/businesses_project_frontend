@@ -1,4 +1,9 @@
-import { LOGOUT_USER, SET_LOGGEDIN_USER } from "store/actionTypes";
+import {
+  LOGOUT_USER,
+  SET_LOGGEDIN_USER,
+  USER_REMOVE_LIKE,
+  USER_UPDATE_LIKE,
+} from "store/actionTypes";
 
 // Define UserType
 export interface IUser {
@@ -7,6 +12,7 @@ export interface IUser {
   firstName: string;
   lastName: string;
   email: string;
+  likes: string[];
   createdAt?: string; // Optional property
 }
 
@@ -23,7 +29,21 @@ export interface LogoutUserAction {
   type: typeof LOGOUT_USER;
 }
 
-export type UserActionTypes = SetLoggedinUserAction | LogoutUserAction;
+export interface UserUpdateLikeAction {
+  type: typeof USER_UPDATE_LIKE;
+  payload: string;
+}
+
+export interface UserRemoveLikeAction {
+  type: typeof USER_REMOVE_LIKE;
+  payload: string;
+}
+
+export type UserActionTypes =
+  | SetLoggedinUserAction
+  | LogoutUserAction
+  | UserUpdateLikeAction
+  | UserRemoveLikeAction;
 
 export interface IUserLoginData {
   username: FormDataEntryValue | null;
