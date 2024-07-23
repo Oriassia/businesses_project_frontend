@@ -6,13 +6,15 @@ import { RootState, useAppDispatch } from "../../store/storeIndex";
 import { fetchLoggedInUser } from "../../store/actions/user.actions";
 import { IUserLoginData } from "@/types/user.types";
 import { useNavigate } from "react-router-dom";
-import { FaUser, FaLock } from "react-icons/fa";
+import { FaUser, FaLock, FaEyeSlash, FaEye } from "react-icons/fa";
 import bananas from "../imgs/bananas.mp4";
 import { useToast } from "@/components/ui/use-toast";
 
-const LoginPage: React.FC = () => {
+const LoginPage = () => {
   const { loggedInUser } = useSelector((state: RootState) => state.userModule);
   const [error, setError] = useState<string | null>(null);
+  const [showPassword, setShowPassword] = useState(false);
+
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -41,7 +43,7 @@ const LoginPage: React.FC = () => {
         });
         localStorage.setItem("token", data.token);
         dispatch(fetchLoggedInUser());
-        navigate("/");
+        navigate(-1);
       }
     } catch (error) {
       toast({
@@ -83,14 +85,28 @@ const LoginPage: React.FC = () => {
           </div>
           <div className="flex items-center border-b border-gray-300 py-2">
             <FaLock className="text-gray-400 mr-3" />
-            <input
-              type="password"
-              id="password"
-              name="password"
-              placeholder="Password"
-              className="w-full p-2 text-gray-700 dark:text-white dark:bg-gray-800  focus:outline-none"
-              required
-            />
+            <div className="relative w-full">
+              <input
+                type={showPassword ? "text" : "password"}
+                id="password"
+                name="password"
+                placeholder="Password"
+                className="w-full p-2 text-gray-700 dark:text-white dark:bg-gray-800 focus:outline-none"
+                required
+              />
+              <div
+                className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer"
+                onClick={() =>
+                  setShowPassword((prevShowPassword) => !prevShowPassword)
+                }
+              >
+                {showPassword ? (
+                  <FaEyeSlash className="text-gray-500" />
+                ) : (
+                  <FaEye className="text-gray-500" />
+                )}
+              </div>
+            </div>
           </div>
           <button
             type="submit"
