@@ -96,13 +96,13 @@ const BusinessesPage = () => {
   };
 
   const handlePagination = (
-    ev: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    ev: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    op: string
   ) => {
     const btnTarget = ev.target as HTMLElement;
-    const btnStr = btnTarget.innerText;
     const page = searchParams.get("page");
     let tempVal: number;
-    if (btnStr === "Next") {
+    if (op === "next") {
       tempVal = +page! + 1;
       if (maxPages && tempVal > maxPages) return;
     } else {
@@ -239,8 +239,8 @@ const BusinessesPage = () => {
           Page {searchParams.get("page")}/{maxPages}
         </p>
         <div>
-          <Button onClick={handlePagination}>Prev</Button>
-          <Button onClick={handlePagination}>Next</Button>
+          <Button onClick={(ev) => handlePagination(ev, "prev")}>Prev</Button>
+          <Button onClick={(ev) => handlePagination(ev, "next")}>Next</Button>
         </div>
         {loading ? (
           <SkeletonCards />
