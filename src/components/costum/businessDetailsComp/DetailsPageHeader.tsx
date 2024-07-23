@@ -11,10 +11,10 @@ interface DetailsPageHeaderProps {
 const DetailsPageHeader: React.FC<DetailsPageHeaderProps> = ({ business }) => {
   return (
     <>
-      <h1 className="text-3xl font-bold py-4">
+      <h1 className="text-3xl font-bold py-8">
         {business.name} {`on ${business.contactInfo.address}`}
       </h1>
-      <div className="lg:flex lg:gap-10 py-3 items-center">
+      <div className="lg:flex lg:gap-10 pb-3 items-center">
         <div className="text-[1.1em] flex pb-3 items-center">
           <div className="flex items-center">
             {renderStars(business.rating)}

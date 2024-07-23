@@ -42,7 +42,7 @@ const DetailsPageReviews: React.FC<ReviewPropsType> = ({ business }) => {
   }
 
   return (
-    <div>
+    <div className="lg:py-10 bg-white p-6 my-8 rounded-lg shadow-xl lg:w-[50em]">
       <h2 className="text-2xl font-bold mb-4">Reviews</h2>
 
       {/* Triggers create modal */}
