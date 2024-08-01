@@ -1,30 +1,79 @@
-# React + TypeScript + Vite
+# Businesses Finder Web App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Businesses Finder** is a full-stack web application built with React for the frontend and Node.js for the backend, using MongoDB as the database. This application serves as a businesses finder tool, enabling users to leave reviews and rate the business.
 
-Currently, two official plugins are available:
+## Technologies Used
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Frontend**: [React](https://reactjs.org/)
+- **Backend**: [Node.js](https://nodejs.org/)
+- **Database**: [MongoDB](https://www.mongodb.com/)
+- **Object-Document Mapping**: [Mongoose](https://mongoosejs.com/)
+- **Real-time Communication**: [Socket.IO](https://socket.io/)
+- **Authentication and Authorization**: [JWT](https://jwt.io/)
 
-## Expanding the ESLint configuration
+## Getting Started
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+To get started with Businesses Finder, you'll need to have the following installed on your local machine:
 
-- Configure the top-level `parserOptions` property like this:
+- [Node.js](https://nodejs.org/) and npm
+- [MongoDB](https://www.mongodb.com/)
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json', './tsconfig.app.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+Once you have these dependencies installed, you can clone the repository and run it.
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+### Installation
+
+1. **Clone the repository:**
+    ```bash
+    git clone https://github.com/Oriassia/bussines_project_backend.git
+    ```
+
+2. **Navigate to the project directory:**
+    ```bash
+    cd bussines_project_backend
+    ```
+
+3. **Install backend dependencies:**
+    ```bash
+    npm install
+    ```
+
+4. **Start the backend:**
+    ```bash
+    npm start
+    ```
+
+### Development
+
+To run the application in development mode:
+
+1. **Clone the repository:**
+    ```bash
+    git clone https://github.com/Oriassia/bussines_project_frontend.git
+    ```
+
+2. **Navigate to the project directory:**
+    ```bash
+    cd bussines_project_frontend
+    ```
+
+3. **Install frontend dependencies:**
+    ```bash
+    npm install
+    ```
+
+4. **Start the frontend:**
+    ```bash
+    npm run dev
+    ```
+
+## Contributing
+
+Contributions to Businesses Finder are welcome! To contribute, simply fork the repository, create a new branch with your changes, and submit a pull request.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Deployed Application
+
+You can find the deployed application at [https://bussines-project.onrender.com](https://bussines-project.onrender.com)
