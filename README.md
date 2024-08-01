@@ -1,4 +1,5 @@
 # Businesses Finder Web App
+### (React + TypeScript + mongoDB)
 
 #### Deployed at: https://bussines-project.onrender.com
 
