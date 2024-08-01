@@ -1,6 +1,6 @@
 # Businesses Finder Web App
 
-## Deployed at 
+### Deployed at 
 https://bussines-project.onrender.com
 
 **Businesses Finder** is a full-stack web application built with React for the frontend and Node.js for the backend, using MongoDB as the database. This application serves as a businesses finder tool, enabling users to leave reviews and rate the business.
