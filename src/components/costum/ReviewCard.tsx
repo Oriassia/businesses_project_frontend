@@ -98,17 +98,20 @@ function ReviewCard({ review, business }: ReviewCardProps) {
             </div>
           ) : null}
         </div>
-        <p className="text-gray-700 mb-2 font-bold">{review.user.username}</p>
+        <p className="text-gray-700  font-bold">{review.user.username}</p>
+        <p className="text-gray-700 mb-2 text-sm ">
+          {review.createdAt?.split("T")[0]}
+        </p>
         <p className="text-gray-700 mb-2">{review.content}</p>
         <div className="flex items-center">
           {loggedInUser?.likes.includes(review._id) ? (
             <FaThumbsUp
-              className="cursor-pointer text-blue-700"
+              className="cursor-pointer  text-blue-700"
               onClick={() => handleLike(review._id, "remove")}
             />
           ) : (
             <FaThumbsUp
-              className="cursor-pointer text-grey-700"
+              className="cursor-pointer dark:text-gray-500 text-grey-500"
               onClick={() => handleLike(review._id, "add")}
             />
           )}

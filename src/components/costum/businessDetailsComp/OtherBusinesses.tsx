@@ -54,8 +54,11 @@ const OtherBusinesses: React.FC<OtherBusinessesProps> = ({
               <h2 className="text-gray-700 mb-2 text-[1.5em] font-bold">
                 {business.name}
               </h2>
-              <div className="flex text-yellow-500 mb-2">
-                {renderStars(business.rating)}
+              <div className="flex items-center mb-2 gap-2 text-black">
+                <div className="flex text-yellow-500">
+                  {renderStars(business.rating)}
+                </div>
+                {`(${business.rating.toFixed(1)})`}
               </div>
               <p className="text-gray-800 mb-4 text-[1.1em]">
                 <span className="font-medium  text-lg text-black ">

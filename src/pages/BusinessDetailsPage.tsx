@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import api from "@/services/api.service";
-import { IBusiness, IReview } from "@/types/business.types";
+import { IBusiness } from "@/types/business.types";
 import DetailsPageHeader from "@/components/costum/businessDetailsComp/DetailsPageHeader";
 import Modal from "@/components/ui/modal";
 import { Button } from "@/components/ui/button";
