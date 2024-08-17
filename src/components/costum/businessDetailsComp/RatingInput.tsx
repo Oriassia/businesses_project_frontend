@@ -2,7 +2,7 @@ import { useState } from "react";
 
 interface RatingProps {
   onChange: (value: number) => void;
-  value: number;
+  value: number | null;
 }
 
 const RatingInput = ({ onChange, value }: RatingProps) => {

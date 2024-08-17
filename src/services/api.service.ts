@@ -1,8 +1,7 @@
 import axios from "axios";
-
+axios.defaults.withCredentials = true;
 const api = axios.create({
-  baseURL:
-    process.env.NODE_ENV === "production" ? "/api" : "//localhost:3000/api",
+  baseURL: "https://bussines-project-api.vercel.app/api",
 });
 
 api.interceptors.request.use(

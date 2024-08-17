@@ -138,8 +138,8 @@ const BusinessesPage = () => {
         },
       };
       dispatch(getBusinesses(options));
+      setLoading(false);
       setTimeout(() => {
-        setLoading(false);
         // console.log({ businesses }, { businessesCount }, maxPages);
       }, 500);
     } catch (err) {
@@ -204,7 +204,7 @@ const BusinessesPage = () => {
             placeholder="Search By Name"
             value={searchParams.get("name") || ""}
             onChange={handleSearchChange}
-            className="px-3 w-[20em] h-[3.5em] rounded-md shadow-pink placeholder:text-[1.1em] placeholder:text-gray-500 focus:outline-none focus:border-pink-500 focus:ring-2 focus:ring-pink-300"
+            className="px-3 w-[20em] h-[3.5em] rounded-md dark:shadow-lg shadow-pink placeholder:text-[1.1em] placeholder:text-gray-500 focus:outline-none focus:border-pink-500 focus:ring-2 focus:ring-pink-300"
           />
           <div className="flex flex-row gap-8 items-center">
             <div className=" w-full bg-white items-center rounded-lg shadow-lg">
@@ -313,11 +313,11 @@ const BusinessesPage = () => {
                     </span>
                     {business.category}
                   </p>
-                  <div className="flex items-center mb-2">
+                  <div className="flex items-center mb-2 gap-2 text-black">
                     <div className="flex text-yellow-500">
-                      {" "}
                       {renderStars(business.rating)}
                     </div>
+                    {`(${business.rating.toFixed(1)})`}
                   </div>
                   <div className="mb-4 text-[1.1em]">
                     <h3 className="font-semibold text-gray-800 mb-1">

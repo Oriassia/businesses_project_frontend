@@ -37,24 +37,29 @@ const AddReviewModal = ({
       isOpen={showAddReviewModal}
       onClose={() => setShowAddReviewModal(false)}
     >
-      <div>{business.name}</div>
-      <div className="flex text-sm text-gray-600">
+      <div className="text-[2em] font-bold text-gray-800 pb-4">
+        {business.name}
+      </div>
+      <div className="flex text-sm gap-3 items-center text-gray-600">
         <Avatar className="h-8 w-8">
           {/* <AvatarImage src={loggedInUser?.imgURL} /> */}
-          <AvatarFallback>
+          <AvatarFallback className="dark:text-white">
             {loggedInUser?.firstName[0].toUpperCase()}
           </AvatarFallback>
         </Avatar>
-        <div>{`${loggedInUser?.firstName} ${loggedInUser?.lastName}`}</div>
+        <div className="text-[1.1em] font-semibold">{`${loggedInUser?.firstName} ${loggedInUser?.lastName}`}</div>
       </div>
 
       <form onSubmit={handleSubmit}>
         <div className="grid w-full gap-1.5">
-          <Label htmlFor="message">Your message</Label>
+          <Label htmlFor="message" className="text-gray-700 py-3 font-medium">
+            Your message
+          </Label>
           <Textarea
             name="reviewContent"
             placeholder="Type your message here."
             id="message"
+            className="text-gray-100 placeholder:text-gray-200"
           />
         </div>
         <RatingInput
