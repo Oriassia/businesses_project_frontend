@@ -1,7 +1,7 @@
 # Businesses Finder Web App
 ### (React + TypeScript + mongoDB)
 
-#### Deployed at: https://bussines-project.onrender.com
+#### Deployed at: https://bussines-project.onrender.com](https://businesses-project-frontend.vercel.app
 
 **Businesses Finder** is a full-stack web application built with React for the frontend and Node.js for the backend, using MongoDB as the database. This application serves as a businesses finder tool, enabling users to leave reviews and rate the business.
 
